@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3cdtm6lbh4on"]
+
+[ext_resource type="Script" uid="uid://77s1iplleyna" path="res://Scripts/Common/Interpreter/Datamodels/PointLight.cs" id="1_h1kgv"]
+[ext_resource type="Texture2D" uid="uid://cfl66lwjobi5f" path="res://Assets/Icons/GizmoSpotLight.svg" id="2_ac8m4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vwdi"]
+
+[node name="PointLight" type="Node3D" node_paths=PackedStringArray("spotLight3D", "Container") groups=["SpotLight3d"]]
+script = ExtResource("1_h1kgv")
+spotLight3D = NodePath("Container/MeshInstance3D/SpotLight3D")
+Container = NodePath("Container")
+
+[node name="Container" type="RigidBody3D" parent="."]
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Container"]
+shape = SubResource("BoxShape3D_8vwdi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Container"]
+skeleton = NodePath("../..")
+
+[node name="Sprite3D" type="Sprite3D" parent="Container/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.096, 0, 0, 0)
+billboard = 1
+texture_filter = 2
+texture = ExtResource("2_ac8m4")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Container/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shadow_enabled = true
+distance_fade_enabled = true
+spot_range = 2.0

@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdkgfgx572y6m"]
+
+[ext_resource type="Script" uid="uid://bodxt12rhw6se" path="res://Scripts/Common/Interpreter/Datamodels/Player.cs" id="1_132mq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oot3v"]
+radius = 1.90572
+height = 9.20435
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oot3v"]
+properties/0/path = NodePath("Avatar:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:NetAnimation")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
+[node name="Char" type="CharacterBody3D" node_paths=PackedStringArray("PrivateSpringArm", "PrivateModel", "PrivateAnimationPlayer", "PrivateCollisionShape")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+collision_layer = 65535
+script = ExtResource("1_132mq")
+PrivateSpringArm = NodePath("")
+PrivateModel = NodePath("")
+PrivateAnimationPlayer = NodePath("")
+PrivateCollisionShape = NodePath("CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.376725, 0, -0.926325, 0, 1, 0, 0.926325, 0, -0.376725, 0.0109568, 3.10394, 0)
+shape = SubResource("CapsuleShape3D_oot3v")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.066
+replication_config = SubResource("SceneReplicationConfig_oot3v")

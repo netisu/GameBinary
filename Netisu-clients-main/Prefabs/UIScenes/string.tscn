@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://crm6qx0w0yh1c"]
+
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="1_cydfj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbtxb"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eva3o"]
+
+[node name="string" type="Control"]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 3
+anchors_preset = 0
+size_flags_vertical = 4
+
+[node name="string" type="Panel" parent="."]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 2
+anchor_left = -0.00374532
+anchor_right = 1.00006
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_qbtxb")
+metadata/_edit_use_anchors_ = true
+
+[node name="title" type="Label" parent="string"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0224733
+anchor_top = 0.126478
+anchor_right = 1.02247
+anchor_bottom = 0.433642
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_cydfj")
+theme_override_font_sizes/font_size = 13
+text = "string"
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="LineEdit" parent="string"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0207625
+anchor_top = 0.451712
+anchor_right = 0.953547
+anchor_bottom = 0.795013
+theme_override_colors/font_color = Color(0.582376, 0.582375, 0.582376, 1)
+theme_override_fonts/font = ExtResource("1_cydfj")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eva3o")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_eva3o")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eva3o")
+text = "String"
+metadata/_edit_use_anchors_ = true

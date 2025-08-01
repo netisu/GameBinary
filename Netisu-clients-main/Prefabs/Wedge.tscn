@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1tkabytq3jru"]
+
+[ext_resource type="Script" uid="uid://c56akvxdf4xh6" path="res://Scripts/Common/Interpreter/Datamodels/Part.cs" id="1_6oc7p"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_0e504"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jegdf"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wpsni"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Wedge" type="RigidBody3D" node_paths=PackedStringArray("meshInstance3D", "collisionShape3D") groups=["PrismMesh"]]
+freeze = true
+script = ExtResource("1_6oc7p")
+meshInstance3D = NodePath("MeshInstance3D")
+collisionShape3D = NodePath("CollisionShape3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("PrismMesh_0e504")
+surface_material_override/0 = SubResource("StandardMaterial3D_jegdf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_wpsni")

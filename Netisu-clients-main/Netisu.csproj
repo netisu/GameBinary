@@ -1,0 +1,16 @@
+<Project Sdk="Godot.NET.Sdk/4.5.0-beta.2">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>Netisu</RootNamespace>
+    <!-- <PublishAot>true</PublishAot> -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MoonSharp" Version="2.0.0" />
+    <PackageReference Include="DiscordRichPresence" Version="1.3.0.28" />
+    
+    <!-- <TrimmerRootAssembly Include="GodotSharp" />--> 
+   <!-- <TrimmerRootAssembly Include="$(TargetName)" /> -->
+  </ItemGroup>
+</Project>

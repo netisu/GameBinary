@@ -1,0 +1,115 @@
+[gd_scene load_steps=16 format=3 uid="uid://1ywg76ys53ag"]
+
+[ext_resource type="Script" uid="uid://nt3xsi5kg2ff" path="res://Scripts/Workshop/MenuBarControllers/TabMenu.cs" id="1_5qvrp"]
+[ext_resource type="Texture2D" uid="uid://o6ft10ex8p5j" path="res://Assets/Icons/Script.svg" id="1_estss"]
+[ext_resource type="FontFile" uid="uid://ybghmjvfwiao" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="2_aacmu"]
+[ext_resource type="Texture2D" uid="uid://bsppswuof5tw5" path="res://Assets/Icons/StatusError.svg" id="3_ddow1"]
+[ext_resource type="PackedScene" uid="uid://cib8pv533xk1x" path="res://Prefabs/UIScenes/CodeEditPopup.tscn" id="5_dwu6x"]
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="5_e3863"]
+[ext_resource type="Texture2D" uid="uid://hk07jvpe6b5o" path="res://Assets/Icons/KeyboardError.svg" id="6_py72k"]
+[ext_resource type="Texture2D" uid="uid://lfwm6dv3t0nn" path="res://Assets/Icons/Window.svg" id="7_3s30k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_msq1j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hipn"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mtq84"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ns2a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlw6h"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdb2w"]
+bg_color = Color(0.254902, 0.254902, 0.254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6uqhf"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+border_width_top = 3
+border_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+
+[node name="Tab" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.104167
+anchor_bottom = 0.0354938
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_msq1j")
+metadata/_edit_use_anchors_ = true
+
+[node name="Active" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_0hipn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_estss")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "contento"
+
+[node name="Exit" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(19.385, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_aacmu")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mtq84")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_mtq84")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mtq84")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_mtq84")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mtq84")
+icon = ExtResource("3_ddow1")
+flat = true
+
+[node name="BodyButton" type="Button" parent="." node_paths=PackedStringArray("TabTitle", "popupMenu")]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1ns2a")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1ns2a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1ns2a")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1ns2a")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1ns2a")
+flat = true
+script = ExtResource("1_5qvrp")
+TabTitle = NodePath("../HBoxContainer/Label")
+popupMenu = NodePath("../MenuRMB")
+CodeEditorPopUpTool = ExtResource("5_dwu6x")
+
+[node name="MenuRMB" type="PopupMenu" parent="."]
+position = Vector2i(299, 88)
+size = Vector2i(289, 56)
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 7
+theme_override_constants/item_start_padding = 10
+theme_override_fonts/font = ExtResource("5_e3863")
+theme_override_styles/panel = SubResource("StyleBoxFlat_qlw6h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kdb2w")
+theme_override_styles/separator = SubResource("StyleBoxFlat_6uqhf")
+submenu_popup_delay = 0.01
+item_count = 2
+item_0/text = "Close scripting tab"
+item_0/icon = ExtResource("6_py72k")
+item_0/id = 0
+item_1/text = "Make scripting editor float"
+item_1/icon = ExtResource("7_3s30k")
+item_1/id = 1
+
+[connection signal="mouse_entered" from="." to="." method="MouseEntered"]
+[connection signal="gui_input" from="BodyButton" to="BodyButton" method="GuiInput"]
+[connection signal="mouse_entered" from="BodyButton" to="BodyButton" method="MouseEntered"]
+[connection signal="index_pressed" from="MenuRMB" to="BodyButton" method="IndexPressed"]

@@ -1,0 +1,76 @@
+[gd_scene load_steps=16 format=3 uid="uid://c3aforoep1q01"]
+
+[ext_resource type="Script" uid="uid://bju3nqp7niiss" path="res://Scripts/Game-Server/Server.cs" id="1_xcdia"]
+[ext_resource type="Script" uid="uid://b1hvqdnsqolm" path="res://Scripts/Common/Interpreter/Datamodels/Game.cs" id="2_pm804"]
+[ext_resource type="Script" uid="uid://cjy8c2rbbk6gs" path="res://Scripts/Common/Interpreter/Datamodels/Map.cs" id="3_khdqj"]
+[ext_resource type="Script" uid="uid://ux3x8uuik06d" path="res://Scripts/Common/Interpreter/Datamodels/LocalScript.cs" id="4_xijkm"]
+[ext_resource type="Script" uid="uid://bij5qif3kyir0" path="res://Scripts/Common/Interpreter/Datamodels/Scripts.cs" id="5_xijkm"]
+[ext_resource type="Script" uid="uid://64dwq6yw5cev" path="res://Scripts/Common/Interpreter/Datamodels/SharedStorage.cs" id="6_owj2m"]
+[ext_resource type="Script" uid="uid://bpja7gn4cmnfx" path="res://Scripts/Common/Interpreter/Datamodels/ServerStorage.cs" id="6_u766r"]
+[ext_resource type="Script" uid="uid://dr2mwefddim35" path="res://Scripts/Common/Interpreter/Datamodels/Players.cs" id="8_jn78f"]
+[ext_resource type="Script" uid="uid://d2y5yabdiukji" path="res://Scripts/Common/Interpreter/Datamodels/Environment.cs" id="9_ij8dr"]
+[ext_resource type="Script" uid="uid://cbrcm7mq6mgf5" path="res://Scripts/Common/Interpreter/Interpreter.cs" id="10_fnney"]
+[ext_resource type="Script" uid="uid://nbokxytddt73" path="res://Scripts/Common/Interpreter/PreservedClasses/PreservedGlobalState.cs" id="11_xijkm"]
+[ext_resource type="Script" uid="uid://c0b4sc7sindig" path="res://Scripts/Common/Interpreter/GlobalManager.cs" id="12_xijkm"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pm804"]
+
+[sub_resource type="Sky" id="Sky_khdqj"]
+sky_material = SubResource("PanoramaSkyMaterial_pm804")
+
+[sub_resource type="Environment" id="Environment_fnney"]
+background_mode = 2
+sky = SubResource("Sky_khdqj")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Server" type="Node" node_paths=PackedStringArray("PlayersContainer", "GameDatamodel")]
+script = ExtResource("1_xcdia")
+PlayersContainer = NodePath("Game/Players")
+GameDatamodel = NodePath("Game")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fnney")
+
+[node name="Game" type="Node3D" parent="." groups=["BoxOccluder3D"]]
+script = ExtResource("2_pm804")
+
+[node name="Map" type="Node3D" parent="Game" groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
+script = ExtResource("3_khdqj")
+
+[node name="LocalScripts" type="Node3D" parent="Game" groups=["PluginScript", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("4_xijkm")
+
+[node name="Scripts" type="Node3D" parent="Game" groups=["PluginScript", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("5_xijkm")
+
+[node name="SharedStorage" type="Node3D" parent="Game" groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("6_owj2m")
+
+[node name="ServerStorage" type="Node3D" parent="Game" groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("6_u766r")
+
+[node name="Players" type="Node3D" parent="Game" groups=["CharacterBody3D", "RESTRICTED_MAX"]]
+script = ExtResource("8_jn78f")
+
+[node name="Environment" type="Node3D" parent="Game" node_paths=PackedStringArray("env") groups=["RESTRICTED_MAX", "WorldEnvironment"]]
+visible = false
+script = ExtResource("9_ij8dr")
+env = NodePath("../../WorldEnvironment")
+
+[node name="Interpreter" type="Node" parent="."]
+script = ExtResource("10_fnney")
+
+[node name="PreservedGlobalState" type="Node" parent="Interpreter"]
+script = ExtResource("11_xijkm")
+
+[node name="GlobalManager" type="Node" parent="Interpreter"]
+script = ExtResource("12_xijkm")

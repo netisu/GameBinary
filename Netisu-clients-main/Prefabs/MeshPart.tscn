@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://div0iqkjlowrb"]
+
+[ext_resource type="Script" uid="uid://b58pqtf88uvfj" path="res://Scripts/Common/Interpreter/Datamodels/MeshPart.cs" id="1_54by0"]
+
+[node name="MeshPart" type="RigidBody3D" groups=["QuadMesh"]]
+freeze = true
+script = ExtResource("1_54by0")

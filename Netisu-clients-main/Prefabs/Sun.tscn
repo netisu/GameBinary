@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca44mfd5pnpd1"]
+
+[ext_resource type="Texture2D" uid="uid://dn4gy0hveea8t" path="res://Assets/Icons/PreviewSun.svg" id="1_63fvb"]
+[ext_resource type="Script" uid="uid://bdqdty184o8w8" path="res://Scripts/Common/Interpreter/Datamodels/Sun.cs" id="1_w4ue6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vwdi"]
+
+[node name="Sun" type="Node3D" node_paths=PackedStringArray("directionalLight3D", "Container") groups=["PreviewSun"]]
+script = ExtResource("1_w4ue6")
+directionalLight3D = NodePath("Container/DirectionalLight3D")
+Container = NodePath("Container")
+
+[node name="Container" type="RigidBody3D" parent="."]
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Container"]
+shape = SubResource("BoxShape3D_8vwdi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Container"]
+transform = Transform3D(-0.8668123, -0.43224007, 0.248606, -0.0015323006, 0.5008802, 0.8655153, -0.4986322, 0.7498583, -0.43483147, 0, 0, 0)
+light_energy = 2.0
+shadow_enabled = true
+directional_shadow_max_distance = 400.0
+
+[node name="Sprite3D" type="Sprite3D" parent="Container"]
+transform = Transform3D(10.4573, -0.00857139, 0.00157965, 0.00854435, 10.4573, 0.00164939, -0.016533, -0.0172347, 0.999997, 0, 0, 0)
+modulate = Color(1, 1, 0.494118, 1)
+billboard = 1
+texture_filter = 2
+texture = ExtResource("1_63fvb")

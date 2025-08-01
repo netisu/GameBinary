@@ -1,0 +1,208 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5vgu5io3ontf"]
+
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="1_6w1hc"]
+[ext_resource type="FontFile" uid="uid://ybghmjvfwiao" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="2_q4pga"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mk8s4"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="GenDocs" type="Control"]
+custom_minimum_size = Vector2(260, 202.815)
+layout_mode = 3
+anchor_right = 0.225694
+anchor_bottom = 0.312986
+offset_right = -260.0
+offset_bottom = -202.815
+metadata/_edit_use_anchors_ = true
+
+[node name="GenDocs" type="Panel" parent="."]
+custom_minimum_size = Vector2(268.015, 55.345)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00374532
+anchor_right = 1.02708
+anchor_bottom = 1.0
+offset_right = -7.02563
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_mk8s4")
+metadata/_edit_use_anchors_ = true
+
+[node name="GenDocs" type="Label" parent="GenDocs"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0223867
+anchor_top = 0.0295836
+anchor_right = 1.02233
+anchor_bottom = 0.113404
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_6w1hc")
+theme_override_font_sizes/font_size = 13
+text = "Generated Docs"
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GenDocs"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 27.0
+offset_right = 268.0
+offset_bottom = 192.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GenDocs/ScrollContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="GenDocs/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(258.62, 58.99)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GenDocs/ScrollContainer/VBoxContainer/Control"]
+layout_mode = 2
+anchor_left = 0.0077708
+anchor_top = 0.043956
+anchor_right = 1.00777
+anchor_bottom = 0.417582
+offset_right = 1.52588e-05
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_6w1hc")
+theme_override_font_sizes/font_size = 13
+text = "TestFunction(isThisTestInRuntime)"
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GenDocs/ScrollContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0156448
+anchor_top = 0.355992
+anchor_right = 1.00383
+anchor_bottom = 1.16918
+theme_override_colors/default_color = Color(0.819608, 0.819608, 0.819608, 0.607843)
+theme_override_fonts/normal_font = ExtResource("2_q4pga")
+theme_override_font_sizes/normal_font_size = 13
+text = "This function is called to test if my thing is working lol!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Control2" type="Control" parent="GenDocs/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(258.62, 58.99)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GenDocs/ScrollContainer/VBoxContainer/Control2"]
+layout_mode = 2
+anchor_left = 0.0077708
+anchor_top = 0.043956
+anchor_right = 1.00777
+anchor_bottom = 0.417582
+offset_right = 1.52588e-05
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_6w1hc")
+theme_override_font_sizes/font_size = 13
+text = "TestFunction(isThisTestInRuntime)"
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GenDocs/ScrollContainer/VBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0156448
+anchor_top = 0.355992
+anchor_right = 1.00383
+anchor_bottom = 1.16918
+theme_override_colors/default_color = Color(0.819608, 0.819608, 0.819608, 0.607843)
+theme_override_fonts/normal_font = ExtResource("2_q4pga")
+theme_override_font_sizes/normal_font_size = 13
+text = "This function is called to test if my thing is working lol!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Control3" type="Control" parent="GenDocs/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(258.62, 58.99)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GenDocs/ScrollContainer/VBoxContainer/Control3"]
+layout_mode = 2
+anchor_left = 0.0077708
+anchor_top = 0.043956
+anchor_right = 1.00777
+anchor_bottom = 0.417582
+offset_right = 1.52588e-05
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_6w1hc")
+theme_override_font_sizes/font_size = 13
+text = "TestFunction(isThisTestInRuntime)"
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GenDocs/ScrollContainer/VBoxContainer/Control3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0156448
+anchor_top = 0.355992
+anchor_right = 1.00383
+anchor_bottom = 1.16918
+theme_override_colors/default_color = Color(0.819608, 0.819608, 0.819608, 0.607843)
+theme_override_fonts/normal_font = ExtResource("2_q4pga")
+theme_override_font_sizes/normal_font_size = 13
+text = "This function is called to test if my thing is working lol!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Control4" type="Control" parent="GenDocs/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(258.62, 58.99)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GenDocs/ScrollContainer/VBoxContainer/Control4"]
+layout_mode = 2
+anchor_left = 0.0077708
+anchor_top = 0.043956
+anchor_right = 1.00777
+anchor_bottom = 0.417582
+offset_right = 1.52588e-05
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_6w1hc")
+theme_override_font_sizes/font_size = 13
+text = "TestFunction(isThisTestInRuntime)"
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GenDocs/ScrollContainer/VBoxContainer/Control4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0156448
+anchor_top = 0.355992
+anchor_right = 1.00383
+anchor_bottom = 1.16918
+theme_override_colors/default_color = Color(0.819608, 0.819608, 0.819608, 0.607843)
+theme_override_fonts/normal_font = ExtResource("2_q4pga")
+theme_override_font_sizes/normal_font_size = 13
+text = "This function is called to test if my thing is working lol!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Control5" type="Control" parent="GenDocs/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(258.62, 58.99)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GenDocs/ScrollContainer/VBoxContainer/Control5"]
+layout_mode = 2
+anchor_left = 0.0077708
+anchor_top = 0.043956
+anchor_right = 1.00777
+anchor_bottom = 0.417582
+offset_right = 1.52588e-05
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_6w1hc")
+theme_override_font_sizes/font_size = 13
+text = "TestFunction(isThisTestInRuntime)"
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GenDocs/ScrollContainer/VBoxContainer/Control5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0156448
+anchor_top = 0.355992
+anchor_right = 1.00383
+anchor_bottom = 1.16918
+theme_override_colors/default_color = Color(0.819608, 0.819608, 0.819608, 0.607843)
+theme_override_fonts/normal_font = ExtResource("2_q4pga")
+theme_override_font_sizes/normal_font_size = 13
+text = "This function is called to test if my thing is working lol!"
+metadata/_edit_use_anchors_ = true

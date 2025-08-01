@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=3 uid="uid://cis27vrw2xwv3"]
+
+[ext_resource type="Script" uid="uid://bfnljtnjrvm8k" path="res://Scripts/Common/Interpreter/Datamodels/Spawnpoint.cs" id="1_3000y"]
+[ext_resource type="ArrayMesh" uid="uid://df25ux5ciuu0j" path="res://Prefabs/Player/NCharacter/arm_left.obj" id="2_5xffg"]
+[ext_resource type="ArrayMesh" uid="uid://cuuyx13atr12q" path="res://Prefabs/Player/NCharacter/cranium.obj" id="3_5hf75"]
+[ext_resource type="ArrayMesh" uid="uid://cag8gc4pgrj44" path="res://Prefabs/Player/NCharacter/chesticle.obj" id="4_vh3u4"]
+[ext_resource type="ArrayMesh" uid="uid://0h7lei4ob14f" path="res://Prefabs/Player/NCharacter/leg_right.obj" id="5_0e4wv"]
+[ext_resource type="ArrayMesh" uid="uid://u465yqofq3qu" path="res://Prefabs/Player/NCharacter/leg_left.obj" id="6_7sts4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7e6x"]
+size = Vector3(4.03589, 5.37006, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8xuj5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33mcy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4hk3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gw1q3"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c12y8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1eof7"]
+
+[node name="SpawnPoint" type="RigidBody3D" groups=["AnimatedSprite3D"]]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1.78878, 0)
+freeze = true
+script = ExtResource("1_3000y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0369873, -0.214322, 0)
+shape = SubResource("BoxShape3D_i7e6x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412476, 0)
+
+[node name="Avatar" type="Node3D" parent="MeshInstance3D"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, -1.66596, 0)
+
+[node name="ArmLeft" type="Node3D" parent="MeshInstance3D/Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.41648, 5, 0)
+
+[node name="ArmLeft" type="MeshInstance3D" parent="MeshInstance3D/Avatar/ArmLeft"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 2.81648, -5, 0)
+transparency = 0.6
+mesh = ExtResource("2_5xffg")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_8xuj5")
+
+[node name="ArmRight" type="Node3D" parent="MeshInstance3D/Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.345, 5, 0)
+
+[node name="ArmRight2" type="MeshInstance3D" parent="MeshInstance3D/Avatar/ArmRight"]
+transform = Transform3D(-0.833333, 0, -1.2583e-07, 0, 0.833333, 0, 1.2583e-07, 0, -0.833333, -2.74933, -5, 0)
+transparency = 0.6
+mesh = ExtResource("2_5xffg")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_33mcy")
+
+[node name="Head" type="Node3D" parent="MeshInstance3D/Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034202, 5.19935, 0)
+
+[node name="Head" type="MeshInstance3D" parent="MeshInstance3D/Avatar/Head"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 0.365798, -5.19935, 0)
+transparency = 0.6
+mesh = ExtResource("3_5hf75")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_v4hk3")
+
+[node name="Torso" type="Node3D" parent="MeshInstance3D/Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04697, 3.62987, 0)
+
+[node name="Torso" type="MeshInstance3D" parent="MeshInstance3D/Avatar/Torso"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 0.44697, -3.62988, 0)
+transparency = 0.6
+mesh = ExtResource("4_vh3u4")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_gw1q3")
+
+[node name="LegRight" type="Node3D" parent="MeshInstance3D/Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.817, 1.839, 0)
+
+[node name="LegRight" type="MeshInstance3D" parent="MeshInstance3D/Avatar/LegRight"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, -0.417, -1.839, 0)
+transparency = 0.6
+mesh = ExtResource("5_0e4wv")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_c12y8")
+
+[node name="LegLeft" type="Node3D" parent="MeshInstance3D/Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8154, 1.839, 0)
+
+[node name="LegLeft" type="MeshInstance3D" parent="MeshInstance3D/Avatar/LegLeft"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 1.2154, -1.839, 0)
+transparency = 0.6
+mesh = ExtResource("6_7sts4")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1eof7")

@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://bexaxdur0uqmx"]
+
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="1_5vrga"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l4pkv"]
+
+[node name="SettingsOption" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Option" type="Control" parent="."]
+custom_minimum_size = Vector2(492.205, 85.925)
+layout_mode = 1
+anchor_right = 0.427261
+anchor_bottom = 0.1326
+offset_right = -492.205
+offset_bottom = -85.925
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Option"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0243801
+anchor_top = 0.128019
+anchor_right = 0.973172
+anchor_bottom = 0.41897
+offset_right = -47.0
+theme_override_fonts/font = ExtResource("1_5vrga")
+text = "Use smaller render distance"
+autowrap_mode = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="CheckBox" type="CheckBox" parent="Option/Title"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.02045
+anchor_top = -0.0241305
+anchor_right = 1.12564
+anchor_bottom = 1.05065
+offset_right = -8.72
+offset_bottom = -8.72
+scale = Vector2(1.545, 1.545)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_l4pkv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_l4pkv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l4pkv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_l4pkv")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_l4pkv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_l4pkv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Description" type="RichTextLabel" parent="Option"]
+layout_mode = 0
+anchor_left = 0.0247763
+anchor_top = 0.388129
+anchor_right = 0.976778
+anchor_bottom = 0.989584
+theme_override_colors/default_color = Color(0.635294, 0.635294, 0.635294, 1)
+text = "Specify to either use smaller render distance or not. Enable this option if you are facing lag or lag spikes."
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvunbp41o4aul"]
+
+[ext_resource type="Script" uid="uid://bi61avxbu01hu" path="res://Scripts/Common/Interpreter/Datamodels/UiPanel.cs" id="1_182wt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kq3cs"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="UiPanel" type="RigidBody3D" node_paths=PackedStringArray("baseControl") groups=["Panel"]]
+freeze = true
+script = ExtResource("1_182wt")
+baseControl = NodePath("Panel")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kq3cs")

@@ -1,0 +1,52 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://wyggt0du15on"]
+
+[ext_resource type="Shader" uid="uid://cdiypq6mecifb" path="res://Shaders/sky.gdshader" id="1_0mcec"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1c7yr"]
+shader = ExtResource("1_0mcec")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/stars_scale = 1.0
+shader_parameter/stars_opacity = 1.0
+shader_parameter/overwritten_time = 0.0
+shader_parameter/sun_dir_world = Vector3(0.2327326, -0.90879756, 0.3462984)
+shader_parameter/moon_dir_world = Vector3(0.43555057, -0.4615116, -0.7728537)
+
+[sub_resource type="Sky" id="Sky_7ky1x"]
+sky_material = SubResource("ShaderMaterial_1c7yr")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_7ky1x")
+ambient_light_color = Color(0.211765, 0.227451, 0.258824, 1)
+reflected_light_source = 2
+sdfgi_use_occlusion = true
+glow_intensity = 1.75
+fog_density = 0.0395
+fog_height = 25.5
+fog_height_density = -2.444
+adjustment_enabled = true
+adjustment_saturation = 1.1

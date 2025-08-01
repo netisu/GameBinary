@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://7mq4qpc106ia"]
+
+[ext_resource type="Script" uid="uid://dteuhkxwkbq6j" path="res://Scripts/Common/Interpreter/Datamodels/Folder.cs" id="1_ycdeg"]
+
+[node name="Folder" type="Node3D" node_paths=PackedStringArray("Container") groups=["Folder"]]
+script = ExtResource("1_ycdeg")
+Container = NodePath("Container")
+
+[node name="Container" type="RigidBody3D" parent="."]
+freeze = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Container"]
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Container"]
+disabled = true

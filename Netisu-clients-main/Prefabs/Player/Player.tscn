@@ -1,0 +1,529 @@
+[gd_scene load_steps=31 format=3 uid="uid://kgvolv68845k"]
+
+[ext_resource type="Script" uid="uid://bodxt12rhw6se" path="res://Scripts/Common/Interpreter/Datamodels/Player.cs" id="1_2f2t2"]
+[ext_resource type="ArrayMesh" uid="uid://bpv242gmqbgtm" path="res://Prefabs/Player/Character/Head.obj" id="2_6tu23"]
+[ext_resource type="Texture2D" uid="uid://cytco678m6jw4" path="res://Prefabs/Player/tmp/face.png" id="3_xn852"]
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="4_hlggv"]
+[ext_resource type="ArrayMesh" uid="uid://bndjxgam2d5ld" path="res://Prefabs/Player/Character/Torso.obj" id="4_u137p"]
+[ext_resource type="ArrayMesh" uid="uid://dlmvl281ricn3" path="res://Prefabs/Player/Character/RightArm.obj" id="5_fvpfc"]
+[ext_resource type="ArrayMesh" uid="uid://cfngnb1kwc3jb" path="res://Prefabs/Player/Character/LeftArm.obj" id="6_kvdfb"]
+[ext_resource type="ArrayMesh" uid="uid://ba8tawpllofuk" path="res://Prefabs/Player/Character/RightLeg.obj" id="7_25xvl"]
+[ext_resource type="ArrayMesh" uid="uid://cg7lc8fs6ibsb" path="res://Prefabs/Player/Character/LeftLeg.obj" id="8_xkdb3"]
+[ext_resource type="Animation" path="res://Prefabs/Player/Animations/Death.tres" id="9_vuotd"]
+[ext_resource type="Animation" uid="uid://dmjik66qap5t5" path="res://Prefabs/Player/Animations/Idle.tres" id="10_felb0"]
+[ext_resource type="Animation" path="res://Prefabs/Player/Animations/Jump.tres" id="11_ytklv"]
+[ext_resource type="Animation" uid="uid://bdp4om8g4l5bf" path="res://Prefabs/Player/Animations/Walk.tres" id="12_sd2fm"]
+[ext_resource type="Animation" path="res://Prefabs/Player/Animations/just_landed.tres" id="13_8k740"]
+[ext_resource type="AudioStream" uid="uid://wkbqw3x7qdeh" path="res://Prefabs/Player/tmp/SFX/jump.mp3" id="14_tx1np"]
+
+[sub_resource type="Animation" id="Animation_inxjm"]
+resource_name = "IdleNew"
+length = 3.0
+
+[sub_resource type="Animation" id="5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Avatar/Head:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Avatar/Torso:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Avatar/RightArm:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Avatar/LeftArm:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Avatar/RightLeg:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Avatar/LeftLeg:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../Avatar/LeftArm:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.73, -5.28155e-08, -3.93547)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Avatar/RightArm:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.73, 0, -3.935)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../Avatar/LeftLeg:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.496, 3.55271e-15, -1.901)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../Avatar/RightLeg:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.496388, -8.31066e-08, -1.90126)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../Avatar:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../Avatar:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../CollisionShape:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2.71273, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_153cq"]
+resource_name = "sit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Avatar/Head:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Avatar/Torso:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Avatar/RightArm:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Avatar/LeftArm:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Avatar/RightLeg:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Avatar/LeftLeg:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../Avatar/LeftArm:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.73, -5.28155e-08, -3.93547), Vector3(1.73, 0, -3.712)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Avatar/RightArm:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.73, 0, -3.935), Vector3(-1.73, -9.74612e-09, -3.71203)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../Avatar/LeftLeg:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.496, 3.55271e-15, -1.901)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../Avatar/RightLeg:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.496388, -8.31066e-08, -1.90126)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../CollisionShape:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 2.71273, 0), Vector3(0, 3.90792, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pytj1"]
+_data = {
+&"Death": ExtResource("9_vuotd"),
+&"Idle": ExtResource("10_felb0"),
+&"IdleNew": SubResource("Animation_inxjm"),
+&"Jump": ExtResource("11_ytklv"),
+&"RESET": SubResource("5"),
+&"Walk": ExtResource("12_sd2fm"),
+&"just_landed": ExtResource("13_8k740"),
+&"sit": SubResource("Animation_153cq")
+}
+
+[sub_resource type="Animation" id="Animation_65jn1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Avatar/Head/Head/Label3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(5.24599e-07, 6.15841, -0.105126)]
+}
+
+[sub_resource type="Animation" id="Animation_eml6h"]
+resource_name = "_"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Avatar/Head/Head/Label3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(5.24599e-07, 6.15841, -0.105126), Vector3(5.46911e-07, 6.41363, -0.105126), Vector3(0, 6.158, -0.105)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lpu3y"]
+_data = {
+&"RESET": SubResource("Animation_65jn1"),
+&"_": SubResource("Animation_eml6h")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wnq1f"]
+radius = 0.895705
+height = 5.499
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ljha6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wr6r"]
+albedo_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfrbk"]
+albedo_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_on6wi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a68g1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q0li4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60buf"]
+
+[node name="Char" type="CharacterBody3D" node_paths=PackedStringArray("PrivateSpringArm", "PrivateModel", "PrivateAnimationPlayer", "PrivateCollisionShape", "PrivateAudioStreamPlayer", "PrivateLabel3D")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+collision_layer = 65535
+script = ExtResource("1_2f2t2")
+PrivateSpringArm = NodePath("SpringArm3D")
+PrivateModel = NodePath("Avatar")
+PrivateAnimationPlayer = NodePath("AnimationPlayer")
+PrivateCollisionShape = NodePath("CollisionShape")
+PrivateAudioStreamPlayer = NodePath("AudioStreamPlayer")
+PrivateLabel3D = NodePath("Avatar/Head/Head/Label3D")
+
+[node name="Container" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8073, 0)
+spring_length = 10.0
+
+[node name="Camera" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+near = 0.01
+far = 2000.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Container")
+libraries = {
+&"": SubResource("AnimationLibrary_pytj1")
+}
+
+[node name="Tag" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lpu3y")
+}
+autoplay = "_"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_tx1np")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.71273, 0)
+shape = SubResource("CapsuleShape3D_wnq1f")
+
+[node name="Avatar" type="Node3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 0, 3.82137e-15, 4.37114e-08, -1, -8.74228e-08, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="Head" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.38813e-21, -2.10002e-07, -4.80429)
+
+[node name="Head" type="MeshInstance3D" parent="Avatar/Head"]
+transform = Transform3D(-1, 8.74227e-08, 4.37114e-08, -4.37114e-08, 7.10543e-15, -0.999999, -8.74228e-08, -0.999999, 0, -1.97641e-21, 2.10002e-07, 4.80429)
+cast_shadow = 0
+lod_bias = 0.7
+mesh = ExtResource("2_6tu23")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ljha6")
+
+[node name="FaceSprite" type="Sprite3D" parent="Avatar/Head/Head"]
+transform = Transform3D(0.187973, 8.32667e-17, 0, -1.24539e-14, 0.187975, -0.00144557, -3.55271e-15, -0.00144557, 0.999998, -1.71554e-07, 4.838, -0.64223)
+texture = ExtResource("3_xn852")
+
+[node name="Label3D" type="Label3D" parent="Avatar/Head/Head"]
+transform = Transform3D(1, -3.69005e-14, 1.27898e-13, 4.12592e-14, 1, 6.03961e-14, -1.84741e-13, -7.81597e-14, 1, 5.24599e-07, 6.15841, -0.105126)
+pixel_size = 0.008
+billboard = 2
+no_depth_test = true
+render_priority = 127
+outline_render_priority = 127
+outline_modulate = Color(0, 0, 0, 0)
+text = "Player"
+font = ExtResource("4_hlggv")
+font_size = 58
+outline_size = 0
+
+[node name="Torso" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.38561e-07, -3.16991)
+
+[node name="Torso" type="MeshInstance3D" parent="Avatar/Torso"]
+transform = Transform3D(1, 0, -4.37114e-08, 4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 6.26384e-22, 1.38561e-07, 3.16991)
+mesh = ExtResource("4_u137p")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_0wr6r")
+
+[node name="ColorTorso" type="MeshInstance3D" parent="Avatar/Torso"]
+transform = Transform3D(1, 0, -4.37114e-08, 4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 6.26384e-22, 1.38561e-07, 3.16991)
+mesh = ExtResource("4_u137p")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hfrbk")
+
+[node name="RightArm" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -1.73, 0, -3.935)
+
+[node name="RightArm" type="MeshInstance3D" parent="Avatar/RightArm"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.73022, 1.73496e-07, 3.96912)
+mesh = ExtResource("5_fvpfc")
+skeleton = NodePath("../..")
+
+[node name="ColorArm" type="MeshInstance3D" parent="Avatar/RightArm"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.73022, 1.73496e-07, 3.96912)
+mesh = ExtResource("5_fvpfc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_on6wi")
+
+[node name="LeftArm" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 1.73, -5.28155e-08, -3.93547)
+
+[node name="LeftArm" type="MeshInstance3D" parent="Avatar/LeftArm"]
+transform = Transform3D(1, -5.92923e-21, 2.84217e-14, 0, -4.37114e-08, 1, 4.23516e-22, -1, -4.37114e-08, -1.73, 5.68434e-14, 3.969)
+mesh = ExtResource("6_kvdfb")
+skeleton = NodePath("../..")
+
+[node name="ColorArm" type="MeshInstance3D" parent="Avatar/LeftArm"]
+transform = Transform3D(1, -5.0822e-21, 2.13163e-14, 0, -4.37114e-08, 1, 4.23516e-22, -1, -4.37114e-08, -1.73, 3.19744e-14, 3.969)
+mesh = ExtResource("6_kvdfb")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_a68g1")
+
+[node name="RightLeg" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 0.999998, 0, 0, 0, 0.999998, -0.496388, -8.31066e-08, -1.90126)
+
+[node name="RightLeg" type="MeshInstance3D" parent="Avatar/RightLeg"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.496388, 8.31066e-08, 1.90126)
+mesh = ExtResource("7_25xvl")
+skeleton = NodePath("../..")
+
+[node name="ColorLeg" type="MeshInstance3D" parent="Avatar/RightLeg"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.496388, 8.31066e-08, 1.90126)
+mesh = ExtResource("7_25xvl")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_q0li4")
+
+[node name="LeftLeg" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 0.999998, 0, 0, 0, 0.999998, 0.496, 3.55271e-15, -1.901)
+
+[node name="LeftLeg" type="MeshInstance3D" parent="Avatar/LeftLeg"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.496, -3.55271e-15, 1.901)
+mesh = ExtResource("8_xkdb3")
+skeleton = NodePath("../..")
+
+[node name="ColorLeg" type="MeshInstance3D" parent="Avatar/LeftLeg"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.496, -3.55271e-15, 1.901)
+mesh = ExtResource("8_xkdb3")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_60buf")

@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjids80q83vjq"]
+
+[ext_resource type="PackedScene" uid="uid://c5ysukysmlwoj" path="res://Prefabs/Player/NPlayer.tscn" id="1_cwr0y"]
+[ext_resource type="PackedScene" uid="uid://mi7q3y3hsk2i" path="res://Prefabs/Cube.tscn" id="2_4qyqf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4qyqf"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_pq87l"]
+sky_material = SubResource("ProceduralSkyMaterial_4qyqf")
+
+[sub_resource type="Environment" id="Environment_w0o2w"]
+background_mode = 2
+sky = SubResource("Sky_pq87l")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Plr" type="RigidBody3D"]
+freeze = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_w0o2w")
+
+[node name="Char" parent="." instance=ExtResource("1_cwr0y")]
+transform = Transform3D(0.565, 0, 0, 0, 0.565, 0, 0, 0, 0.565, 0, 1.88334, 0)
+OfflineMode = true
+
+[node name="Cube" parent="." instance=ExtResource("2_4qyqf")]

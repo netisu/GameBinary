@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmxiaygs58pwj"]
+
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="1_27err"]
+[ext_resource type="FontFile" uid="uid://c4slh7siwd5js" path="res://Assets/Fonts/Consolas.ttf" id="2_b6pe5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mk8s4"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87obo"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_3bfwb"]
+number_color = Color(0.631373, 1, 0.878431, 1)
+symbol_color = Color(0.670588, 0.788235, 1, 1)
+function_color = Color(0.862745, 0.862745, 0.666667, 1)
+member_variable_color = Color(0.737255, 0.878431, 1, 1)
+
+[node name="Code" type="Control"]
+custom_minimum_size = Vector2(231.365, 202.815)
+layout_mode = 3
+anchor_right = 0.225694
+anchor_bottom = 0.312986
+offset_right = -260.0
+offset_bottom = -202.815
+metadata/_edit_use_anchors_ = true
+
+[node name="Code" type="Panel" parent="."]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00374532
+anchor_right = 1.00006
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_mk8s4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Code" type="Label" parent="Code"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0223867
+anchor_top = 0.0295836
+anchor_right = 1.02233
+anchor_bottom = 0.113404
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_27err")
+theme_override_font_sizes/font_size = 13
+text = "Preview"
+metadata/_edit_use_anchors_ = true
+
+[node name="CodeEdit" type="CodeEdit" parent="Code"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 26.0
+offset_right = 226.0
+offset_bottom = 198.0
+mouse_default_cursor_shape = 0
+theme_override_fonts/font = ExtResource("2_b6pe5")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_87obo")
+theme_override_styles/focus = SubResource("StyleBoxFlat_87obo")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_87obo")
+theme_override_styles/completion = SubResource("StyleBoxFlat_87obo")
+editable = false
+syntax_highlighter = SubResource("CodeHighlighter_3bfwb")
+gutters_draw_line_numbers = true

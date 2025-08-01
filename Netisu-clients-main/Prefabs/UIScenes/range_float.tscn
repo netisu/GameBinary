@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnmx33kyssp3q"]
+
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="1_o1pmw"]
+[ext_resource type="FontFile" uid="uid://ybghmjvfwiao" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="2_s0m0v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbtxb"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrciu"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_t7ahe"]
+default_font = ExtResource("2_s0m0v")
+default_font_size = 10
+LineEdit/styles/focus = SubResource("StyleBoxFlat_vrciu")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_vrciu")
+
+[node name="range_float" type="Control"]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 3
+anchor_right = 0.225694
+anchor_bottom = 0.085409
+offset_right = -260.0
+offset_bottom = -55.345
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="range_float" type="Panel" parent="."]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 2
+anchor_left = -0.00374532
+anchor_right = 1.00006
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_qbtxb")
+metadata/_edit_use_anchors_ = true
+
+[node name="range_float" type="Label" parent="range_float"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0224733
+anchor_top = 0.126478
+anchor_right = 1.02247
+anchor_bottom = 0.433642
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_o1pmw")
+theme_override_font_sizes/font_size = 13
+text = "range_float"
+metadata/_edit_use_anchors_ = true
+
+[node name="SpinBox" type="SpinBox" parent="range_float"]
+layout_mode = 0
+anchor_left = 0.0261179
+anchor_top = 0.415575
+anchor_right = 0.421618
+anchor_bottom = 0.975698
+theme = SubResource("Theme_t7ahe")
+min_value = 4.995
+value = 4.995
+rounded = true
+metadata/_edit_use_anchors_ = true

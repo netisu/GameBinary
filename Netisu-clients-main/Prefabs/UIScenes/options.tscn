@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://sj6n8nda0xel"]
+
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="1_uvt8g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbtxb"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6w8l6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s4wfw"]
+
+[node name="options" type="Control"]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 3
+anchor_right = 0.451389
+anchor_bottom = 0.170818
+offset_right = -260.0
+offset_bottom = -55.345
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="options" type="Panel" parent="."]
+custom_minimum_size = Vector2(231.365, 55.345)
+layout_mode = 2
+anchor_left = -0.00384615
+anchor_right = 1.02698
+anchor_bottom = 1.04797
+offset_bottom = -32.1256
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_qbtxb")
+metadata/_edit_use_anchors_ = true
+
+[node name="title" type="Label" parent="options"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0224733
+anchor_top = 0.126478
+anchor_right = 1.02247
+anchor_bottom = 0.433642
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_fonts/font = ExtResource("1_uvt8g")
+theme_override_font_sizes/font_size = 13
+text = "options"
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="OptionButton" parent="options"]
+layout_mode = 0
+anchor_left = 0.022289
+anchor_top = 0.37931
+anchor_right = 0.302124
+anchor_bottom = 0.913793
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6w8l6")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6w8l6")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6w8l6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6w8l6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6w8l6")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_6w8l6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_s4wfw")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_s4wfw")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_s4wfw")
+flat = true
+metadata/_edit_use_anchors_ = true

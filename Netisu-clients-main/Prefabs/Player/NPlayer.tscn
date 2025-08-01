@@ -1,0 +1,384 @@
+[gd_scene load_steps=21 format=3 uid="uid://c5ysukysmlwoj"]
+
+[ext_resource type="Script" uid="uid://bodxt12rhw6se" path="res://Scripts/Common/Interpreter/Datamodels/Player.cs" id="1_b8ya1"]
+[ext_resource type="ArrayMesh" uid="uid://c0q71qnbc1vte" path="res://Prefabs/Player/NCharacter/arm_left.obj" id="3_v2p6s"]
+[ext_resource type="ArrayMesh" uid="uid://bm1wruceskc7e" path="res://Prefabs/Player/NCharacter/chesticle.obj" id="4_oot3v"]
+[ext_resource type="ArrayMesh" uid="uid://p0o4uexckjti" path="res://Prefabs/Player/NCharacter/cranium.obj" id="5_b5yec"]
+[ext_resource type="ArrayMesh" uid="uid://dj0vo6xfjl6xc" path="res://Prefabs/Player/NCharacter/leg_left.obj" id="6_i6i4j"]
+[ext_resource type="ArrayMesh" uid="uid://psjgolrqwv37" path="res://Prefabs/Player/NCharacter/leg_right.obj" id="7_3m65p"]
+[ext_resource type="ArrayMesh" uid="uid://13kx0qn256fs" path="res://Prefabs/Player/NCharacter/Accessories/Project Name.obj" id="8_3m65p"]
+[ext_resource type="Texture2D" uid="uid://o0uyjgnhvola" path="res://Prefabs/Player/NCharacter/Accessories/default_5.png" id="10_5c35l"]
+
+[sub_resource type="Animation" id="Animation_oot3v"]
+resource_name = "Idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Avatar/Head:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.0261799, 0, 0), Vector3(-0.0261799, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Avatar/ArmLeft:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.0349066), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Avatar/ArmRight:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.0349066), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Avatar/LegLeft:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.010472, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Avatar/LegRight:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.010472, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3m65p"]
+resource_name = "Jump"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Avatar/ArmLeft:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-3.14159, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Avatar/ArmRight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-3.14159, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Avatar/LegRight:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Avatar/LegLeft:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b5yec"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Avatar/Head:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Avatar/ArmLeft:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Avatar/ArmRight:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Avatar/LegLeft:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Avatar/LegRight:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_i6i4j"]
+resource_name = "Walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Avatar/ArmLeft:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.567686, 0, 0), Vector3(-0.567232, 0, 0), Vector3(0.567686, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Avatar/ArmRight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.567232, 0, 0), Vector3(0.567232, 0, 0), Vector3(-0.567232, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Avatar/LegRight:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.567232, 0, 0), Vector3(-0.567232, 0, 0), Vector3(0.567232, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Avatar/LegLeft:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.567232, 0, 0), Vector3(0.567232, 0, 0), Vector3(-0.567232, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i6i4j"]
+_data = {
+&"Idle": SubResource("Animation_oot3v"),
+&"Jump": SubResource("Animation_3m65p"),
+&"RESET": SubResource("Animation_b5yec"),
+&"Walk": SubResource("Animation_i6i4j")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oot3v"]
+radius = 1.90572
+height = 9.20435
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5c35l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmr3i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mhds5"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aofy6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8ya1"]
+
+[sub_resource type="FontFile" id="FontFile_oot3v"]
+cache/0/102/0/ascent = 0.0
+cache/0/102/0/descent = 0.0
+cache/0/102/0/underline_position = 0.0
+cache/0/102/0/underline_thickness = 0.0
+cache/0/102/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/98/0/ascent = 0.0
+cache/0/98/0/descent = 0.0
+cache/0/98/0/underline_position = 0.0
+cache/0/98/0/underline_thickness = 0.0
+cache/0/98/0/scale = 1.0
+
+[node name="Char" type="CharacterBody3D" node_paths=PackedStringArray("PrivateSpringArm", "PrivateModel", "PrivateAnimationPlayer", "PrivateCollisionShape")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+collision_layer = 65535
+script = ExtResource("1_b8ya1")
+PrivateSpringArm = NodePath("SpringArm3D")
+PrivateModel = NodePath("Avatar")
+PrivateAnimationPlayer = NodePath("AnimationPlayer")
+PrivateCollisionShape = NodePath("CollisionShape")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0195384, 4.8073, 0)
+spring_length = 10.0
+
+[node name="Camera" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+current = true
+near = 0.01
+far = 2000.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_i6i4j")
+}
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.376725, 0, -0.926325, 0, 1, 0, 0.926325, 0, -0.376725, 0.0109568, 3.10394, 0)
+shape = SubResource("CapsuleShape3D_oot3v")
+
+[node name="Avatar" type="Node3D" parent="."]
+
+[node name="ArmLeft" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.41648, 5, 0)
+
+[node name="ArmLeft" type="MeshInstance3D" parent="Avatar/ArmLeft"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 2.81648, -5, 0)
+mesh = ExtResource("3_v2p6s")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_5c35l")
+
+[node name="ArmRight" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.345, 5, 0)
+
+[node name="ArmRight2" type="MeshInstance3D" parent="Avatar/ArmRight"]
+transform = Transform3D(-0.833333, 0, -1.2583e-07, 0, 0.833333, 0, 1.2583e-07, 0, -0.833333, -2.74933, -5, 0)
+mesh = ExtResource("3_v2p6s")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_5c35l")
+
+[node name="Head" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034202, 5.19935, 0)
+
+[node name="ProjectName" type="MeshInstance3D" parent="Avatar/Head"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 0.365798, -5.19935, 0)
+mesh = ExtResource("8_3m65p")
+skeleton = NodePath("../../..")
+
+[node name="Head" type="MeshInstance3D" parent="Avatar/Head"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 0.365798, -5.19935, 0)
+mesh = ExtResource("5_b5yec")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmr3i")
+
+[node name="Face" type="Sprite3D" parent="Avatar/Head/Head"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.46662, 7.30766, 1.25728)
+texture = ExtResource("10_5c35l")
+
+[node name="Torso" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04697, 3.62987, 0)
+
+[node name="Torso" type="MeshInstance3D" parent="Avatar/Torso"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 0.44697, -3.62988, 0)
+mesh = ExtResource("4_oot3v")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mhds5")
+
+[node name="LegRight" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.817, 1.839, 0)
+
+[node name="LegRight" type="MeshInstance3D" parent="Avatar/LegRight"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, -0.417, -1.839, 0)
+mesh = ExtResource("7_3m65p")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_aofy6")
+
+[node name="LegLeft" type="Node3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8154, 1.839, 0)
+
+[node name="LegLeft" type="MeshInstance3D" parent="Avatar/LegLeft"]
+transform = Transform3D(0.833333, 0, 0, 0, 0.833333, 0, 0, 0, 0.833333, 1.2154, -1.839, 0)
+mesh = ExtResource("6_i6i4j")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_b8ya1")
+
+[node name="Label3D" type="Label3D" parent="Avatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.86926, 0)
+billboard = 1
+no_depth_test = true
+outline_modulate = Color(0, 0, 0, 0)
+text = "Username"
+font = SubResource("FontFile_oot3v")
+font_size = 98

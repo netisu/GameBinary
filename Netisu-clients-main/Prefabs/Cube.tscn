@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://mi7q3y3hsk2i"]
+
+[ext_resource type="Script" uid="uid://c56akvxdf4xh6" path="res://Scripts/Common/Interpreter/Datamodels/Part.cs" id="1_h7xdx"]
+[ext_resource type="Script" uid="uid://df3elb2ksr3w" path="res://Scripts/Common/Interpreter/Datamodels/Utility/PartUtility.cs" id="2_1o5oo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xcxs6"]
+size = Vector3(2, 2, 2)
+
+[node name="Cube" type="Node3D" node_paths=PackedStringArray("collisionShape3D", "Container") groups=["BoxMesh"]]
+script = ExtResource("1_h7xdx")
+collisionShape3D = NodePath("Container/CollisionShape3D")
+Container = NodePath("Container")
+
+[node name="Container" type="RigidBody3D" parent="." node_paths=PackedStringArray("part")]
+freeze = true
+script = ExtResource("2_1o5oo")
+part = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Container"]
+rotation_order = 0
+shape = SubResource("BoxShape3D_xcxs6")

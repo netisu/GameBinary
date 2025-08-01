@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://tmmksw1uldve"]
+
+[ext_resource type="Script" uid="uid://b1hvqdnsqolm" path="res://Scripts/Common/Interpreter/Datamodels/Game.cs" id="1_joorw"]
+[ext_resource type="Script" uid="uid://cjy8c2rbbk6gs" path="res://Scripts/Common/Interpreter/Datamodels/Map.cs" id="2_2vekm"]
+[ext_resource type="Script" uid="uid://dr26vot4dbeqa" path="res://Scripts/Common/Interpreter/Datamodels/LocalScripts.cs" id="3_yx171"]
+[ext_resource type="Script" uid="uid://bij5qif3kyir0" path="res://Scripts/Common/Interpreter/Datamodels/Scripts.cs" id="4_yhmtn"]
+[ext_resource type="Script" uid="uid://bpja7gn4cmnfx" path="res://Scripts/Common/Interpreter/Datamodels/ServerStorage.cs" id="5_gwjdr"]
+[ext_resource type="Script" uid="uid://64dwq6yw5cev" path="res://Scripts/Common/Interpreter/Datamodels/SharedStorage.cs" id="6_lvtmh"]
+[ext_resource type="Script" uid="uid://dr2mwefddim35" path="res://Scripts/Common/Interpreter/Datamodels/Players.cs" id="7_yyih5"]
+[ext_resource type="Script" uid="uid://d2y5yabdiukji" path="res://Scripts/Common/Interpreter/Datamodels/Environment.cs" id="8_qjyg3"]
+
+[node name="Game" type="Node3D" groups=["BoxOccluder3D"]]
+script = ExtResource("1_joorw")
+
+[node name="Map" type="Node3D" parent="." groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
+script = ExtResource("2_2vekm")
+
+[node name="LocalScripts" type="Node3D" parent="." groups=["RESTRICTED_MAX", "ScriptCreateDialog"]]
+visible = false
+script = ExtResource("3_yx171")
+
+[node name="Scripts" type="Node3D" parent="." groups=["PluginScript", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("4_yhmtn")
+
+[node name="ServerStorage" type="Node3D" parent="." groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("5_gwjdr")
+
+[node name="SharedStorage" type="Node3D" parent="." groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("6_lvtmh")
+
+[node name="Players" type="Node3D" parent="." groups=["CharacterBody3D", "RESTRICTED_MAX"]]
+visible = false
+script = ExtResource("7_yyih5")
+
+[node name="Environment" type="Node3D" parent="." groups=["RESTRICTED_MAX", "WorldEnvironment"]]
+visible = false
+script = ExtResource("8_qjyg3")

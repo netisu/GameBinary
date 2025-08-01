@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccwxg6nvq7gjm"]
+
+[ext_resource type="Script" uid="uid://dxlx7cfyl0qxn" path="res://Scripts/Common/Interpreter/Datamodels/Seat.cs" id="1_1jtin"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8nktx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ulxq2"]
+albedo_color = Color(0.196078, 0.278431, 0.513726, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2wfod"]
+size = Vector3(0.76, 0.28, 0.59)
+
+[node name="Seat" type="RigidBody3D" groups=["Area3D"]]
+freeze = true
+script = ExtResource("1_1jtin")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.761557, 0, 0, 0, 0.279567, 0, 0, 0, 0.597465, 0, 0, 0)
+mesh = SubResource("BoxMesh_8nktx")
+surface_material_override/0 = SubResource("StandardMaterial3D_ulxq2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2wfod")
+
+[node name="NoScale" type="Node" parent="."]
+
+[connection signal="body_entered" from="." to="." method="OnBodyCollision"]

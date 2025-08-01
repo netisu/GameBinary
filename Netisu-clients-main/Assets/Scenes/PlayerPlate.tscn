@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bij7uaflv31hj"]
+
+[ext_resource type="Script" uid="uid://cllec5aak6djs" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_5vcjk"]
+[ext_resource type="Texture2D" uid="uid://tsc3i31uu1e1" path="res://Assets/PresetHeadshots/90aad6d8c91e9c3ef7171904aee141cdbee399ddc2ce_headshot.png" id="2_tjn3v"]
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="3_rtylr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iiye1"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.882353)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rsqk"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+anti_aliasing = false
+
+[node name="PlayerPlate" type="Control"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iiye1")
+
+[node name="TextureRectRounded" type="Panel" parent="Panel"]
+clip_children = 1
+layout_mode = 0
+anchor_left = 0.0371901
+anchor_top = 0.0888889
+anchor_right = 0.181818
+anchor_bottom = 0.866667
+theme_override_styles/panel = SubResource("StyleBoxFlat_3rsqk")
+script = ExtResource("1_5vcjk")
+radius_bottom_left = 20
+radius_bottom_right = 20
+radius_top_left = 20
+radius_top_right = 20
+texture = ExtResource("2_tjn3v")
+metadata/_custom_type_script = "uid://cllec5aak6djs"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+anchor_left = 0.202479
+anchor_top = 0.244444
+anchor_right = 0.975207
+anchor_bottom = 0.755556
+theme_override_colors/font_color = Color(0.73859, 0.73859, 0.73859, 1)
+theme_override_fonts/font = ExtResource("3_rtylr")
+text = "Username"
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true

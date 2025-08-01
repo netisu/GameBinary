@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg4k8ot8711sl"]
+
+[ext_resource type="Script" uid="uid://c56akvxdf4xh6" path="res://Scripts/Common/Interpreter/Datamodels/Part.cs" id="1_ix45e"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rq0ua"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jegdf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tjrog"]
+
+[node name="Sphere" type="RigidBody3D" node_paths=PackedStringArray("meshInstance3D", "collisionShape3D") groups=["SphereMesh"]]
+freeze = true
+script = ExtResource("1_ix45e")
+meshInstance3D = NodePath("MeshInstance3D")
+collisionShape3D = NodePath("CollisionShape3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("SphereMesh_rq0ua")
+surface_material_override/0 = SubResource("StandardMaterial3D_jegdf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("SphereShape3D_tjrog")

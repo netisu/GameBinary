@@ -1,0 +1,109 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlre7ivemp8i7"]
+
+[ext_resource type="Script" path="res://Mixins/Gizmo/2D/UiGizmo.cs" id="1_i2dry"]
+[ext_resource type="FontFile" uid="uid://sw0qjsriyqgm" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="2_emxxe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnbru"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.894118, 0.894118, 0.894118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aeefn"]
+bg_color = Color(0.894118, 0.894118, 0.894118, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wo20f"]
+
+[node name="UiGizmo" type="Panel" node_paths=PackedStringArray("SizeLabel", "DragMiddle", "TL", "BL", "TR", "BR")]
+offset_left = 241.0
+offset_top = 172.0
+offset_right = 371.0
+offset_bottom = 259.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mnbru")
+script = ExtResource("1_i2dry")
+SizeLabel = NodePath("PanelContainer/Label")
+DragMiddle = NodePath("DragMiddle")
+TL = NodePath("TL")
+BL = NodePath("BL")
+TR = NodePath("TR")
+BR = NodePath("BR")
+
+[node name="DragMiddle" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 5.0
+offset_right = 122.0
+offset_bottom = 82.0
+
+[node name="TL" type="Panel" parent="."]
+layout_mode = 1
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 6.0
+offset_bottom = 6.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aeefn")
+
+[node name="BL" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 5.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aeefn")
+
+[node name="TR" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -6.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 6.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aeefn")
+
+[node name="BR" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aeefn")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -17.5
+offset_top = 2.77
+offset_right = 17.5
+offset_bottom = 16.77
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wo20f")
+
+[node name="Label" type="Label" parent="PanelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_emxxe")
+theme_override_font_sizes/font_size = 11
+text = "130x87"
+horizontal_alignment = 1
+vertical_alignment = 1

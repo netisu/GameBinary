@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://hq88kqkjnbtp"]
+
+[ext_resource type="Script" uid="uid://dioe1ig06w3m0" path="res://Scripts/Common/Interpreter/Datamodels/Script.cs" id="1_l7h6q"]
+
+[node name="ServerScript" type="RigidBody3D" groups=["ScriptExtend"]]
+freeze = true
+script = ExtResource("1_l7h6q")

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqhq23o3ggb5m"]
+
+[ext_resource type="Script" uid="uid://texaxrv70at2" path="res://Scripts/Common/Interpreter/Datamodels/UIHorizontalLayout.cs" id="1_he8gv"]
+
+[node name="UiHorizontalLayout" type="RigidBody3D" node_paths=PackedStringArray("baseControl") groups=["HBoxContainer"]]
+freeze = true
+script = ExtResource("1_he8gv")
+baseControl = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 4
