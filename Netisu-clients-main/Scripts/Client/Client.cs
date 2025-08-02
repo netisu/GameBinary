@@ -6,110 +6,128 @@ namespace Netisu.Client
 	public partial class Client : Node
 	{
 		[Export]
-		public Netisu.Datamodels.Game GameModel = null!;
-		[Export]
+		public Datamodels.Game GameModel = null!;
 		public Players PlayersContainer = null!;
-
-		public const string PlayerScene = "res://Prefabs/Player/NPlayer.tscn";
 		public const string IP_ADD = "127.0.0.1";
+
 		public static Client Instance { get; private set; }
 		public Player LocalPlayer { get; private set; }
 
-		// This dictionary holds the local player's data, just like in the lobby example.
-		// You can change "Name" from your UI before connecting.
+		private NetworkManager _network;
 		private Godot.Collections.Dictionary<string, string> _playerInfo = new()
 		{
-			{ "Name", "Player" + GD.Randi() % 1000 } // Default random name
+			{ "Name", "Player" + GD.Randi() % 1000 }
 		};
 
 		public override void _Ready()
 		{
+			Instance = this;
+			_network = GetNode<NetworkManager>("/root/NetworkManager");
+
+			GameModel = GetNode<Datamodels.Game>("Game");
+			PlayersContainer = GetNode<Players>("Game/Players");
+			// Connect to signals from the NetworkManager
+			_network.Client_AuthenticationNoted += OnAuthenticationNoted;
+			_network.Client_PlayerListReceived += OnPlayerListReceived;
+			_network.Client_MapLoadRequested += OnMapLoadRequested;
+			_network.Client_PlayerAdded += OnPlayerAdded;
+			_network.Client_PlayerLeft += OnPlayerLeft;
+			_network.Client_ChatMessageReceived += OnChatMessageReceived;
+
 			EstablishConnection();
+		}
+
+		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+		public void UpdateEnvironment(float dayTime)
+		{
+			// Get the client's local Environment node
+			var environmentNode = GetNode<Netisu.Datamodels.Environment>("Game/Environment");
+			if (environmentNode != null)
+			{
+				// Update the DayTime property. The _Process method in Environment.cs
+				// will automatically use this new value to update the sky shader.
+				environmentNode.DayTime = dayTime;
+			}
 		}
 
 		public void EstablishConnection()
 		{
-			var clientPeer = new ENetMultiplayerPeer();
-			clientPeer.CreateClient(IP_ADD, 25565);
-			Multiplayer.MultiplayerPeer = clientPeer;
+			var peer = new ENetMultiplayerPeer();
+			peer.CreateClient(IP_ADD, 25565);
+			Multiplayer.MultiplayerPeer = peer;
 
 			Multiplayer.ConnectedToServer += () =>
 			{
 				GD.Print("Connection Succeeded. Authenticating...");
-				var rpcProxy = new ServerRpcInterface { Name = "Server" };
-				GetTree().Root.AddChild(rpcProxy);
-				// When we connect, we send our player info along with the auth key.
-				rpcProxy.RpcId(1, "AuthenticateUser", "playtest_auth_key", _playerInfo);
-
-				rpcProxy.QueueFree();
-
+				// We now call the RPC on the global NetworkManager
+				_network.RpcId(1, nameof(NetworkManager.AuthenticateUser), "playtest_auth_key", _playerInfo);
 			};
-
-			Multiplayer.ConnectionFailed += () =>
-			{
-				GD.PrintErr("Connection Failed.");
-				GetTree().Quit();
-			};
+			Multiplayer.ConnectionFailed += () => GD.PrintErr("Connection Failed.");
 		}
 
-		// --- RPC Functions Called BY the Server ---
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void AuthenticationNoted(string userdata)
+		private void OnAuthenticationNoted(string message)
 		{
 			if (Multiplayer.GetRemoteSenderId() != 1) return;
-			GD.Print($"Server acknowledged: {userdata}");
+
+			GD.Print($"Server says: {message}");
 		}
 
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void PopulatePlayerList(Godot.Collections.Dictionary<long, Godot.Collections.Dictionary<string, string>> allPlayers)
+		private void OnPlayerListReceived(Godot.Collections.Dictionary<long, Godot.Collections.Dictionary<string, string>> allPlayers)
 		{
 			if (Multiplayer.GetRemoteSenderId() != 1) return;
-			GD.Print("Received full player list from server.");
+
+			GD.Print("Received player list. Spawning players...");
 			foreach (var entry in allPlayers)
 			{
-				AddPlayer((int)entry.Key, entry.Value);
+				OnPlayerAdded((int)entry.Key, entry.Value);
 			}
 		}
 
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void LoadInitialMap(string mapJson)
+		private void OnMapLoadRequested(string mapJson)
 		{
 			if (Multiplayer.GetRemoteSenderId() != 1) return;
-			GD.Print("Received map data from server. Building world...");
-			var importer = new Netisu.Game.Map.Importer();
+
+			GD.Print("Received map data. Building world...");
+			var importer = new Game.Map.Importer();
 			importer.Import(mapJson, GameModel);
 		}
 
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void AddPlayer(int peerId, Godot.Collections.Dictionary<string, string> playerInfo)
+		private void OnPlayerAdded(int peerId, Godot.Collections.Dictionary<string, string> playerInfo)
 		{
 			if (Multiplayer.GetRemoteSenderId() != 1) return;
+
 			if (PlayersContainer.GetNodeOrNull(peerId.ToString()) != null) return;
 
-			GD.Print($"Spawning player for {playerInfo["Name"]} (Peer ID: {peerId})");
-			Player playerPrefab = GD.Load<PackedScene>(PlayerScene).Instantiate<Player>();
-			playerPrefab.Name = peerId.ToString(); // Use the unique ID for the node name
-												   // You can now use the playerInfo to set up the visual node, e.g., a nameplate
+			GD.Print($"Spawning player for {playerInfo["Name"]} (ID: {peerId})");
+			var playerScene = GD.Load<PackedScene>("res://Prefabs/Player/NPlayer.tscn");
+			var playerNode = playerScene.Instantiate<Player>();
+			playerNode.Name = peerId.ToString();// Use the unique ID for the node name
+
+			// You can now use the playerInfo to set up the visual node, e.g., a nameplate
 			//playerPrefab.SetNameplate(playerInfo["Name"]);
-			PlayersContainer.AddChild(playerPrefab);
+			PlayersContainer.AddChild(playerNode);
+
 			if (peerId == Multiplayer.GetUniqueId())
 			{
-				LocalPlayer = playerPrefab;
+				LocalPlayer = playerNode;
 				GD.Print("LocalPlayer reference has been set.");
 			}
 		}
 
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void OnPlayerLeft(int peerId, string playerName)
+		private void OnPlayerLeft(int peerId, string playerName)
 		{
 			if (Multiplayer.GetRemoteSenderId() != 1) return;
-			GD.Print($"{playerName} has disconnected.");
+
+			GD.Print($"{playerName} has left.");
 			var playerNode = PlayersContainer.GetNodeOrNull(peerId.ToString());
 			playerNode?.QueueFree();
 		}
 
-		// --- Dummy RPCs to match the Server's script ---
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void AuthenticateUser(string authorizationKey, Godot.Collections.Dictionary<string, string> playerInfo) { }
+		private void OnChatMessageReceived(string username, string message)
+		{
+			if (Multiplayer.GetRemoteSenderId() != 1) return;
+
+			GD.Print($"[CHAT] {username}: {message}");
+		}
 	}
 }

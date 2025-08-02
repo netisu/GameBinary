@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://tmmksw1uldve"]
+[gd_scene load_steps=13 format=3 uid="uid://tmmksw1uldve"]
 
 [ext_resource type="Script" uid="uid://b1hvqdnsqolm" path="res://Scripts/Common/Interpreter/Datamodels/Game.cs" id="1_joorw"]
 [ext_resource type="Script" uid="uid://cjy8c2rbbk6gs" path="res://Scripts/Common/Interpreter/Datamodels/Map.cs" id="2_2vekm"]
+[ext_resource type="Shader" uid="uid://cdiypq6mecifb" path="res://Shaders/sky.gdshader" id="2_kycso"]
 [ext_resource type="Script" uid="uid://dr26vot4dbeqa" path="res://Scripts/Common/Interpreter/Datamodels/LocalScripts.cs" id="3_yx171"]
 [ext_resource type="Script" uid="uid://bij5qif3kyir0" path="res://Scripts/Common/Interpreter/Datamodels/Scripts.cs" id="4_yhmtn"]
 [ext_resource type="Script" uid="uid://bpja7gn4cmnfx" path="res://Scripts/Common/Interpreter/Datamodels/ServerStorage.cs" id="5_gwjdr"]
@@ -9,8 +10,51 @@
 [ext_resource type="Script" uid="uid://dr2mwefddim35" path="res://Scripts/Common/Interpreter/Datamodels/Players.cs" id="7_yyih5"]
 [ext_resource type="Script" uid="uid://d2y5yabdiukji" path="res://Scripts/Common/Interpreter/Datamodels/Environment.cs" id="8_qjyg3"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w0qho"]
+shader = ExtResource("2_kycso")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/stars_scale = 1.0
+shader_parameter/stars_opacity = 1.0
+shader_parameter/overwritten_time = 0.0
+shader_parameter/sun_dir_world = Vector3(0, 1, 0)
+shader_parameter/moon_dir_world = Vector3(0, -1, 0)
+
+[sub_resource type="Sky" id="Sky_4sjua"]
+sky_material = SubResource("ShaderMaterial_w0qho")
+
+[sub_resource type="Environment" id="Environment_hfae5"]
+background_mode = 2
+sky = SubResource("Sky_4sjua")
+
 [node name="Game" type="Node3D" groups=["BoxOccluder3D"]]
 script = ExtResource("1_joorw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hfae5")
 
 [node name="Map" type="Node3D" parent="." groups=["BoxOccluder3D", "RESTRICTED_MAX"]]
 script = ExtResource("2_2vekm")

@@ -5,22 +5,22 @@
 [ext_resource type="PackedScene" uid="uid://bexaxdur0uqmx" path="res://Prefabs/UIScenes/SettingsOption.tscn" id="3_4reuu"]
 [ext_resource type="FontFile" uid="uid://cw3q1d6dlxij4" path="res://Assets/Fonts/Montserrat-Bold.ttf" id="4_m7bbt"]
 [ext_resource type="FontFile" uid="uid://b1rbxnpjyjs0w" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="5_5tgal"]
-[ext_resource type="Texture2D" uid="uid://c8xiah4ljrlup" path="res://Assets/Icons/Rename.svg" id="6_achlr"]
-[ext_resource type="Texture2D" uid="uid://dfe2iekvpaka6" path="res://Assets/Icons/KeyboardError.svg" id="7_5xmp7"]
-[ext_resource type="Texture2D" uid="uid://cifpoueh6wv4" path="res://Assets/Icons/Instance.svg" id="8_nxybg"]
-[ext_resource type="Texture2D" uid="uid://dalmt5hbgqaxm" path="res://Assets/Icons/ExpandBottomDock.svg" id="9_wfpgf"]
-[ext_resource type="Texture2D" uid="uid://dacpub0mc6vjh" path="res://Assets/Icons/ActionCut.svg" id="10_ya0mi"]
-[ext_resource type="Texture2D" uid="uid://dactl6wd8k0c7" path="res://Assets/Icons/ActionCopy.svg" id="11_dujcq"]
-[ext_resource type="Texture2D" uid="uid://btqd0doefrto1" path="res://Assets/Icons/ActionPaste.svg" id="12_81s7v"]
-[ext_resource type="Texture2D" uid="uid://cyfbv0fintnw5" path="res://Assets/Icons/CopyNodePath.svg" id="13_ea228"]
-[ext_resource type="Texture2D" uid="uid://c6sufg50k448j" path="res://Assets/Icons/MeshLibrary.svg" id="14_uo70t"]
-[ext_resource type="Texture2D" uid="uid://bp5sd0s34p0qd" path="res://Assets/Icons/Collapse.svg" id="15_yfm4x"]
+[ext_resource type="Texture2D" uid="uid://dg538i3wvjsu7" path="res://Assets/Icons/Rename.svg" id="6_achlr"]
+[ext_resource type="Texture2D" uid="uid://cq1p6t003jd3s" path="res://Assets/Icons/KeyboardError.svg" id="7_5xmp7"]
+[ext_resource type="Texture2D" uid="uid://3ij2tqi4cw0j" path="res://Assets/Icons/Instance.svg" id="8_nxybg"]
+[ext_resource type="Texture2D" uid="uid://buebh5gio7qa5" path="res://Assets/Icons/ExpandBottomDock.svg" id="9_wfpgf"]
+[ext_resource type="Texture2D" uid="uid://bvt4a5mfw7pa7" path="res://Assets/Icons/ActionCut.svg" id="10_ya0mi"]
+[ext_resource type="Texture2D" uid="uid://djoil10vvvhvs" path="res://Assets/Icons/ActionCopy.svg" id="11_dujcq"]
+[ext_resource type="Texture2D" uid="uid://c6g83edpghn4" path="res://Assets/Icons/ActionPaste.svg" id="12_81s7v"]
+[ext_resource type="Texture2D" uid="uid://cwjdwfd75wyp5" path="res://Assets/Icons/CopyNodePath.svg" id="13_ea228"]
+[ext_resource type="Texture2D" uid="uid://c3lqq7ia6euch" path="res://Assets/Icons/MeshLibrary.svg" id="14_uo70t"]
+[ext_resource type="Texture2D" uid="uid://cioej56j8hqbl" path="res://Assets/Icons/Collapse.svg" id="15_yfm4x"]
 [ext_resource type="Script" uid="uid://bcjgf313yroqh" path="res://Scripts/Workshop/MenuBarControllers/TreeMenuRMB.cs" id="16_gktcw"]
 [ext_resource type="PackedScene" uid="uid://ybtyh6wgrte0" path="res://Prefabs/UIScenes/DefaultPopupMenu.tscn" id="17_5avvd"]
 [ext_resource type="Script" uid="uid://uipwkyv3hwf4" path="res://Scripts/Workshop/MenuBarControllers/GizmosMenu.cs" id="18_6oxi5"]
 [ext_resource type="Script" uid="uid://cbrcm7mq6mgf5" path="res://Scripts/Common/Interpreter/Interpreter.cs" id="19_d7xmk"]
 [ext_resource type="Environment" uid="uid://wyggt0du15on" path="res://root.tres" id="20_gml4o"]
-[ext_resource type="PackedScene" uid="uid://tmmksw1uldve" path="res://Game.tscn" id="21_6xs3x"]
+[ext_resource type="PackedScene" uid="uid://tmmksw1uldve" path="res://Scenes/GameWorld.tscn" id="21_6xs3x"]
 [ext_resource type="Script" uid="uid://3ufuh18aqc1m" path="res://Scripts/Workshop/EngineUI.cs" id="22_hwq6u"]
 [ext_resource type="FontFile" uid="uid://c50vu0ivydkfv" path="res://Assets/Fonts/Consolas.ttf" id="23_edike"]
 [ext_resource type="Script" uid="uid://cs6sgaablt84h" path="res://Scripts/Workshop/ClipboardManager.cs" id="24_8j2h7"]
@@ -42,15 +42,15 @@
 [ext_resource type="Texture2D" uid="uid://qscvfa7dyuqe" path="res://Assets/Icons/Anchor.png" id="39_0rjv6"]
 [ext_resource type="Texture2D" uid="uid://bd1fuvyiqpnwm" path="res://Assets/Icons/UIOff.png" id="40_actqg"]
 [ext_resource type="Script" uid="uid://btp3kdhf75cr6" path="res://Scripts/Workshop/GameExplorer.cs" id="41_ceeor"]
-[ext_resource type="Texture2D" uid="uid://dde31mkeogiix" path="res://Assets/Icons/GuiVisibilityHidden.svg" id="42_ib4ij"]
-[ext_resource type="Texture2D" uid="uid://04gyhct3j8wd" path="res://Assets/Icons/GuiVisibilityVisible.svg" id="43_i3oj6"]
-[ext_resource type="Texture2D" uid="uid://8ryamhqk0u7p" path="res://Assets/Icons/Lock.svg" id="44_0t6pp"]
+[ext_resource type="Texture2D" uid="uid://3updgx5d7rxn" path="res://Assets/Icons/GuiVisibilityHidden.svg" id="42_ib4ij"]
+[ext_resource type="Texture2D" uid="uid://cki8t2ffx6e3j" path="res://Assets/Icons/GuiVisibilityVisible.svg" id="43_i3oj6"]
+[ext_resource type="Texture2D" uid="uid://dc4d0lhcpwyqb" path="res://Assets/Icons/Lock.svg" id="44_0t6pp"]
 [ext_resource type="Script" uid="uid://cwlvfmx6i47sb" path="res://Scripts/Workshop/MenuBarControllers/DebugMenu.cs" id="45_fty3e"]
 [ext_resource type="Script" uid="uid://n3dactoyi17v" path="res://Scripts/Workshop/MenuBarControllers/InsertMenu.cs" id="46_xdxbg"]
-[ext_resource type="Texture2D" uid="uid://be755kgl5gap" path="res://Assets/Icons/Close.svg" id="47_4reuu"]
+[ext_resource type="Texture2D" uid="uid://ctpujhxmebns8" path="res://Assets/Icons/Close.svg" id="47_4reuu"]
 [ext_resource type="Script" uid="uid://dpulu36kkrh6k" path="res://Scripts/Workshop/EngineCamera.cs" id="47_ucd4f"]
 [ext_resource type="Script" uid="uid://bbx3ut053l4n1" path="res://Scripts/Common/Interpreter/Datamodels/UserInterface.cs" id="48_feh6g"]
-[ext_resource type="Script" uid="uid://b2k1grkjfppm6" path="res://Prefabs/ShaderCode/SkyBox.cs" id="48_rh52r"]
+[ext_resource type="Script" uid="uid://dnc6qrd7awuot" path="res://Prefabs/ShaderCode/SkyController.cs" id="49_4reuu"]
 [ext_resource type="Script" uid="uid://cqcskock8m7ht" path="res://Scripts/Workshop/Gizmo/Gizmo3D.cs" id="49_h3chn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06s5y"]
@@ -415,9 +415,6 @@ script = ExtResource("19_d7xmk")
 
 [node name="Game" parent="." instance=ExtResource("21_6xs3x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0118318, 0.00395012, -0.000279784)
-
-[node name="Environment" parent="Game" index="6" node_paths=PackedStringArray("env")]
-env = NodePath("../../EngineGUI/SubViewportContainer/SubViewport/EngineCamera/SkyController/WorldEnvironment")
 
 [node name="EngineGUI" type="Control" parent="." node_paths=PackedStringArray("GameDataModel", "CodeEditor", "TabsContainer", "PropertiesContainer", "userInterface")]
 layout_mode = 3
@@ -1629,13 +1626,8 @@ far = 1538.46
 script = ExtResource("47_ucd4f")
 colorPickerButton = NodePath("../../../Ribbon/Panel/HBoxContainer2/VBoxContainer/HBoxContainer2/Col")
 
-[node name="SkyController" type="Node3D" parent="EngineGUI/SubViewportContainer/SubViewport/EngineCamera" node_paths=PackedStringArray("Environment", "Sun", "Moon")]
-script = ExtResource("48_rh52r")
-SunBaseEnergy = 1.0
-MoonBaseEnergy = 1.0
-Environment = NodePath("WorldEnvironment")
-Sun = NodePath("Sun")
-Moon = NodePath("Moon")
+[node name="SkyController" type="Node3D" parent="EngineGUI/SubViewportContainer/SubViewport/EngineCamera"]
+script = ExtResource("49_4reuu")
 
 [node name="Sun" type="DirectionalLight3D" parent="EngineGUI/SubViewportContainer/SubViewport/EngineCamera/SkyController"]
 transform = Transform3D(0.9209022, 0, -0.38979378, 0.38979378, -4.371139e-08, 0.9209022, -1.7038428e-08, -1, -4.0253912e-08, 0, 0, 0)

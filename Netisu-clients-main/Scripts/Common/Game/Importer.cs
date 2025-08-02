@@ -178,24 +178,6 @@ namespace Netisu.Game.Map
 
 		public void Import(string MapJson, Node _Parent, Workshop.GameExplorer _GameExplorer = null)
 		{
-			// If this code is running on a dedicated server (headless), we only parse the data
-			// and do NOT attempt to instantiate any visual nodes.
-			if (OS.HasFeature("server"))
-			{
-				GD.Print("Importer is in Headless Server mode. Parsing data only.");
-				Json _j = new();
-				if (_j.Parse(MapJson) == Error.Ok)
-				{
-					ParsedMapData = _j.Data.As<Godot.Collections.Dictionary>();
-				}
-				else
-				{
-					GD.PrintErr("Failed to parse map JSON on server.");
-				}
-				return; // IMPORTANT: Stop execution here for the server.
-			}
-
-			// This code will only run on clients or in the editor, which have graphics.
 			Json _j_client = new();
 			if (_j_client.Parse(MapJson) != Error.Ok)
 			{
@@ -203,27 +185,31 @@ namespace Netisu.Game.Map
 				return;
 			}
 
-			Godot.Collections.Dictionary JsonConverted = _j_client.Data.As<Godot.Collections.Dictionary>();
+			var data = _j_client.Data.As<Godot.Collections.Dictionary>();
+			if (data == null) return;
 
-			if (JsonConverted.ContainsKey("Environment") && JsonConverted["Environment"].VariantType != Variant.Type.Nil)
+
+			if (data.ContainsKey("Environment"))
 			{
 				var environmentNode = _Parent.GetNode<Datamodels.Environment>("Environment");
 				if (environmentNode != null)
 				{
-					Godot.Collections.Dictionary envData = JsonConverted["Environment"].As<Godot.Collections.Dictionary>();
-					if (envData.ContainsKey("Brightness")) environmentNode.Brightness = (float)envData["Brightness"];
-					if (envData.ContainsKey("VolumetricFogEnabled")) environmentNode.VolumetricFogEnabled = (bool)envData["VolumetricFogEnabled"];
-					if (envData.ContainsKey("SSREnabled")) environmentNode.SSREnabled = (bool)envData["SSREnabled"];
-					if (envData.ContainsKey("SSAOEnabled")) environmentNode.SSAOEnabled = (bool)envData["SSAOEnabled"];
-					if (envData.ContainsKey("ManualTimeControl")) environmentNode.ManualTimeControl = (bool)envData["ManualTimeControl"];
-					if (envData.ContainsKey("DayTime")) environmentNode.DayTime = (float)envData["DayTime"];
+					var envData = data["Environment"].As<Godot.Collections.Dictionary>();
+					if (envData.ContainsKey("Brightness"))
+						environmentNode.Brightness = envData["Brightness"].As<float>();
+					if (envData.ContainsKey("DayTime"))
+						environmentNode.DayTime = envData["DayTime"].As<float>();
+					/*
+				if (envData.ContainsKey("ManualTimeControl")) 
+					environmentNode.ManualTimeControl = envData["ManualTimeControl"].As<bool>();
+					*/
 				}
 			}
 
 			Node mapNode = _Parent.GetNodeOrNull("Map");
-			if (mapNode != null && JsonConverted.ContainsKey("Map"))
+			if (mapNode != null && data.ContainsKey("Map"))
 			{
-				var mapArray = JsonConverted["Map"].As<Godot.Collections.Array>();
+				var mapArray = data["Map"].As<Godot.Collections.Array>();
 				if (mapArray != null)
 				{
 					foreach (Variant item in mapArray)

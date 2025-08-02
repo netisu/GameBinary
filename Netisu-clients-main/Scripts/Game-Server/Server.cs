@@ -17,118 +17,103 @@ namespace Netisu.Client
 		[Export]
 		public Players PlayersContainer = null!;
 		[Export]
-		public Netisu.Datamodels.Game GameDatamodel = null!;
-		public static Server Instance { get; private set; } = null!;
-		public static bool PlaytestMode { get; private set; } = false;
+		public Datamodels.Game GameDatamodel = null!;
 
-		public ENetMultiplayerPeer ServerPeer = new();
+		public static Server Instance { get; private set; } = null!;
+		
+		private NetworkManager _network;
 		public Dictionary<long, PlayerSession> SessionPlayers = [];
 		public string MapJson = string.Empty;
 
 		public override void _Ready()
 		{
 			Instance = this;
-			PlaytestMode = Initializer.ProgramArguments.ContainsKey("playtest");
+			_network = GetNode<NetworkManager>("/root/NetworkManager");
 
-			if (Initializer.ProgramArguments.TryGetValue("map-path", out string path) && path == "default")
-			{
-				using var fileAccess = FileAccess.Open("user://Maps/playtest-map.ntsm", FileAccess.ModeFlags.Read);
-				if (fileAccess != null)
-				{
-					MapJson = fileAccess.GetAsText();
-					GD.Print("Server has loaded map data into memory.");
-				}
-				else
-				{
-					GD.PrintErr("No playtest-map.ntsm found?");
-					GetTree().Quit();
-				}
-			}
+			// Get a reference to the Players node inside the instanced GameWorld scene.
+			PlayersContainer = GetNode<Players>("Game/Players");
+
+			// Connect to signals from the NetworkManager to drive server logic
+			_network.Server_PlayerAuthenticated += OnPlayerAuthenticated;
+			_network.Server_PlayerChatMessageReceived += OnChatMessageReceived;
+			Multiplayer.PeerDisconnected += OnPlayerLeft;
+
+			// Load map data
+			using var file = FileAccess.Open("user://Maps/playtest-map.ntsm", FileAccess.ModeFlags.Read);
+			if (file != null) MapJson = file.GetAsText();
+			
 			StartServer();
+		}
+
+		public override void _PhysicsProcess(double delta)
+		{
+			// Get the Environment node from the instanced GameWorld scene
+			var environmentNode = GetNode<Netisu.Datamodels.Environment>("Game/Environment");
+			if (environmentNode != null)
+			{
+				// Broadcast the current time of day to all clients
+				Rpc(nameof(Client.UpdateEnvironment), environmentNode.DayTime);
+			}
 		}
 
 		public void StartServer()
 		{
-			if (!int.TryParse(Initializer.ProgramArguments["port"], out int Port))
+			var peer = new ENetMultiplayerPeer();
+			if (peer.CreateServer(25565) != Error.Ok)
 			{
-				Port = PlaytestMode ? 2034 : 25565;
-			}
-
-			ServerPeer = new();
-			var error = ServerPeer.CreateServer(Port);
-			if (error != Error.Ok)
-			{
-				GD.PrintErr($"Failed to start server. Error: {error}. Is port {Port} already in use?");
+				GD.PrintErr("Failed to start server.");
 				GetTree().Quit();
 				return;
 			}
-			Multiplayer.MultiplayerPeer = ServerPeer;
+			Multiplayer.MultiplayerPeer = peer;
 			GD.Print("Server is up!");
-			ServerPeer.PeerConnected += OnUserJoined;
-			ServerPeer.PeerDisconnected += OnUserLeft;
 		}
 
-		private void OnUserJoined(long userPeer)
+		private void OnPlayerAuthenticated(long peerId, string authKey, Godot.Collections.Dictionary<string, string> playerInfo)
 		{
-			GD.Print($"Peer {userPeer} connected. Awaiting authentication.");
-		}
-
-		private void OnUserLeft(long userPeer)
-		{
-			if (SessionPlayers.TryGetValue(userPeer, out var session))
-			{
-				var playerNode = PlayersContainer.GetNodeOrNull(userPeer.ToString());
-				playerNode?.QueueFree();
-				SessionPlayers.Remove(userPeer);
-				Rpc(nameof(Client.OnPlayerLeft), (int)userPeer, session.PlayerData["Name"]);
-				GD.Print($"Peer {userPeer} ({session.PlayerData["Name"]}) disconnected and removed.");
-			}
-		}
-
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void AuthenticateUser(string authorizationKey, Godot.Collections.Dictionary<string, string> playerInfo)
-		{
-			long userPeer = Multiplayer.GetRemoteSenderId();
-
-			Player playerNode = GD.Load<PackedScene>("res://Prefabs/Player/Player_Server.tscn").Instantiate<Player>();
-			playerNode.Name = userPeer.ToString(); // Use the unique ID for the node name
+			GD.Print($"Peer {peerId} authenticated as {playerInfo["Name"]}");
+			
+			var playerNode = GD.Load<PackedScene>("res://Prefabs/Player/Player_Server.tscn").Instantiate<Player>();
+			playerNode.Name = peerId.ToString();
 			PlayersContainer.AddChild(playerNode);
+			
+			SessionPlayers.Add(peerId, new PlayerSession(authKey, playerInfo, playerNode));
 
-			SessionPlayers.Add(userPeer, new(authorizationKey, playerInfo, playerNode));
-			GD.Print($"Peer {userPeer} authenticated as '{playerInfo["Name"]}'.");
-
-			// 1. Acknowledge authentication and send the full player list to the new player
-			RpcId(userPeer, nameof(Client.AuthenticationNoted), "Authentication successful.");
-
-			// 2. Tell the new player about all existing players
-			var allPlayersInfo = new Godot.Collections.Dictionary<long, Godot.Collections.Dictionary<string, string>>();
-			foreach (var session in SessionPlayers)
+			// Acknowledge authentication
+			_network.RpcId(peerId, nameof(NetworkManager.AuthenticationNoted), "Welcome!");
+			
+			// Tell the new player about all existing players
+			foreach(var session in SessionPlayers)
 			{
-				allPlayersInfo[session.Key] = session.Value.PlayerData;
+				if (session.Key == peerId) continue;
+				_network.RpcId(peerId, nameof(NetworkManager.AddPlayer), (int)session.Key, session.Value.PlayerData);
 			}
-			RpcId(userPeer, nameof(Client.PopulatePlayerList), allPlayersInfo);
 
-			// 3. Tell all OTHER players about the new player
-			Rpc(nameof(Client.AddPlayer), (int)userPeer, playerInfo);
-
-			// 4. Send the map data to the new player so they can build the world
-			RpcId(userPeer, nameof(Client.LoadInitialMap), MapJson);
+			// Tell everyone else about the new player
+			_network.Rpc(nameof(NetworkManager.AddPlayer), (int)peerId, playerInfo);
+			
+			// Send the map
+			_network.RpcId(peerId, nameof(NetworkManager.LoadInitialMap), MapJson);
 		}
 
-		// --- Dummy RPCs to match the Client's script ---
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void AuthenticationNoted(string userdata) { }
+		private void OnChatMessageReceived(long peerId, string message)
+		{
+			if (SessionPlayers.TryGetValue(peerId, out var session))
+			{
+				_network.Rpc(nameof(NetworkManager.ChatMessageClientRecieved), session.PlayerData["Name"], message);
+			}
+		}
 
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void PopulatePlayerList(Godot.Collections.Dictionary<long, Godot.Collections.Dictionary<string, string>> allPlayers) { }
-
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void LoadInitialMap(string mapJson) { }
-
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void AddPlayer(int peerId, Godot.Collections.Dictionary<string, string> playerInfo) { }
-
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-		public void OnPlayerLeft(int peerId, string playerName) { }
+		private void OnPlayerLeft(long peerId)
+		{
+			if (SessionPlayers.TryGetValue(peerId, out var session))
+			{
+				var playerNode = PlayersContainer.GetNodeOrNull(peerId.ToString());
+				playerNode?.QueueFree();
+				SessionPlayers.Remove(peerId);
+				_network.Rpc(nameof(NetworkManager.OnPlayerLeft), (int)peerId);
+				GD.Print($"Peer {peerId} ({session.PlayerData["Name"]}) disconnected.");
+			}
+		}
 	}
 }

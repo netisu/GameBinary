@@ -141,7 +141,7 @@ namespace Netisu.Datamodels
 			PrivateModel ??= GetNode<Node3D>("Avatar");
 			PrivateSpringArm = GetNode<SpringArm3D>("SpringArm3D");
 			PrivateAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-			PrivateLabel3D = GetNode<Label3D>("Label3D");
+			PrivateLabel3D = GetNode<Label3D>("Avatar/Username");
 
 			GD.Print($"[SpringArm Check] LocalID: {Multiplayer.GetUniqueId()} | RpcIdByServer: {RpcIdByServer}");
 

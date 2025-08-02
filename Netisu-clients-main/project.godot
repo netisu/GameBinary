@@ -26,6 +26,7 @@ config/icon="res://logo.png"
 [autoload]
 
 RenderBatches="*res://Assets/Scenes/RenderBatches.tscn"
+NetworkManager="*res://NetworkManager.cs"
 
 [compression]
 

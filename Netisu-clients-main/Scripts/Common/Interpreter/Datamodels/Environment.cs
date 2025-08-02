@@ -1,115 +1,58 @@
 using Godot;
-using System;
-using Netisu.Workshop;
 
 namespace Netisu.Datamodels
 {
-    public partial class Environment : Instance
-    {
-        [Export] private WorldEnvironment env = null!;
+	public partial class Environment : Instance
+	{
+		// These will be assigned in _Ready() instead of the editor.
+		private WorldEnvironment _worldEnv;
+		private DirectionalLight3D _sun;
 
-        [Export] private SkyBox _skyController = null!;
+		// This is the "source of truth" for the time of day.
+		// A MultiplayerSynchronizer should be used to sync this from server to clients.
+		[Export(PropertyHint.Range, "0.0,24.0,0.0001")]
+		public float DayTime { get; set; } = 12.0f;
 
-        public override void _Ready()
-        {
-            // The _skyController is now assigned from the editor, so we don't need GetNode here.
-        }
+		public override void _Ready()
+		{
+			// Get references to the necessary nodes.
+			_worldEnv = GetParent().GetNode<WorldEnvironment>("WorldEnvironment");
+			_sun = GetParent().GetNode<DirectionalLight3D>("DirectionalLight3D");
+		}
 
-        public float DayTime
-        {
-            get => _skyController != null ? _skyController.DayTime : 12.0f;
-            set
-            {
-                if (_skyController != null)
-                {
-                    _skyController.SetDayTimeFromUI(value);
-                }
-            }
-        }
+		public override void _Process(double delta)
+		{
+			if (!Multiplayer.IsServer())
+			{
+				UpdateVisuals();
+			}
+		}
 
-        public bool ManualTimeControl
-        {
-            get => _skyController != null && _skyController.ManualTimeControl;
-            set
-            {
-                if (_skyController != null)
-                {
-                    _skyController.ManualTimeControl = value;
-                }
-            }
-        }
+		private void UpdateVisuals()
+		{
+			if (_worldEnv == null || _sun == null) return;
 
-        public float Brightness
-        {
-            get => env!.Environment.BackgroundEnergyMultiplier;
-            set
-            {
-                if (Netisu.Project.Flags.IsServer)
-                {
-                    Godot.Collections.Dictionary dat = new() { { "v", value } };
-                    GetNodeOrNull<Server>("/root/Root")?.CallDeferred("DoSetAttribute", "brightness_env", dat);
-                }
-                env!.Environment.BackgroundEnergyMultiplier = value;
-            }
-        }
+			// Simple sun rotation based on time
+			float dayProgress = DayTime / 24.0f;
+			_sun.RotationDegrees = new Vector3(-90 + (dayProgress * 180), -30, 0);
 
-        public PreservedGlobalClasses.Col3 AmbientLightColor
-        {
-            get => new(env!.Environment.AmbientLightColor.R, env.Environment.AmbientLightColor.G, env.Environment.AmbientLightColor.B);
-            set => env!.Environment.AmbientLightColor = new Godot.Color(value.r, value.g, value.b);
-        }
+			if (_worldEnv.Environment?.Sky?.SkyMaterial is ShaderMaterial skyShader)
+			{
+				skyShader.SetShaderParameter("sun_dir_world", -_sun.GlobalTransform.Basis.Z.Normalized());
+			}
+		}
 
+		public float Brightness
+		{
+			get => _worldEnv?.Environment?.BackgroundEnergyMultiplier ?? 1.0f;
+			set
+			{
+				if (_worldEnv?.Environment != null)
+				{
+					_worldEnv.Environment.BackgroundEnergyMultiplier = value;
+				}
+			}
+		}
 
-        public bool VolumetricFogEnabled
-        {
-            get => env!.Environment.VolumetricFogEnabled;
-            set
-            {
-                if (Netisu.Project.Flags.IsServer)
-                {
-                    Godot.Collections.Dictionary dat = new() { { "v", value } };
-                    GetNodeOrNull<Server>("/root/Root")?.CallDeferred("DoSetAttribute", "vol_fog_enable", dat);
-                }
-                env!.Environment.VolumetricFogEnabled = value;
-            }
-        }
-
-        public bool SSREnabled
-        {
-            get => env!.Environment.SsrEnabled;
-            set
-            {
-                if (Netisu.Project.Flags.IsServer)
-                {
-                    Godot.Collections.Dictionary dat = new() { { "v", value } };
-                    GetNodeOrNull<Server>("/root/Root")?.CallDeferred("DoSetAttribute", "ssr_enabled", dat);
-                }
-                env!.Environment.SsrEnabled = value;
-            }
-        }
-
-        public bool SSAOEnabled
-        {
-            get => env!.Environment.SsaoEnabled;
-            set
-            {
-                if (Netisu.Project.Flags.IsServer)
-                {
-                    Godot.Collections.Dictionary dat = new() { { "v", value } };
-                    GetNodeOrNull<Server>("/root/Root")?.CallDeferred("DoSetAttribute", "ssao_enabled", dat);
-                }
-                env!.Environment.SsaoEnabled = value;
-            }
-        }
-
-        // here are overriden functions or properties to not allow.
-        public override Instance this[string key]
-        {
-            get => RuntimeErrors.ScriptRuntimeException("cannot index children inside environment");
-        }
-
-        public override Instance FindFirstChild(string key) => RuntimeErrors.ScriptRuntimeException("cannot index children inside environment");
-
-        public override Instance FindChild(string key) => RuntimeErrors.ScriptRuntimeException("cannot index children inside environment");
-    }
+	}
 }

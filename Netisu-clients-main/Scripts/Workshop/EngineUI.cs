@@ -611,21 +611,6 @@ namespace Netisu.Workshop
 
 		private void OnBoolPropertyChange(Control _property_control, string friendlyPropertyName = null)
 		{
-			if (friendlyPropertyName == "BOOL_VOL_FOG_ENABLED_ENV")
-			{
-				GetNode<Datamodels.Environment>("/root/Root/Game/Environment").VolumetricFogEnabled = _property_control.GetNode<CheckBox>("bool/Value").ButtonPressed;
-			}
-
-			if (friendlyPropertyName == "BOOL_SSR_ENABLED_ENV")
-			{
-				GetNode<Datamodels.Environment>("/root/Root/Game/Environment").SSREnabled = _property_control.GetNode<CheckBox>("bool/Value").ButtonPressed;
-			}
-
-			if (friendlyPropertyName == "BOOL_SSAO_ENABLED_ENV")
-			{
-				GetNode<Datamodels.Environment>("/root/Root/Game/Environment").SSAOEnabled = _property_control.GetNode<CheckBox>("bool/Value").ButtonPressed;
-			}
-
 			if (friendlyPropertyName == "BOOL_ANCHORED_PART")
 			{
 				GetNode<Part>(CurrentPropertiesLoaded["ngine_node_path"].ToString()).Anchored = _property_control.GetNode<CheckBox>("bool/Value").ButtonPressed;

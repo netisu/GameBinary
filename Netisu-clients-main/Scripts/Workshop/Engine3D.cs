@@ -21,7 +21,7 @@ namespace Netisu.Workshop
 		[Export] public Sprite2D Play;
 		[Export] private Interpreter intp;
 		
-		private string EditorPlaytestBinary = @"C:\Users\Lady Redz\Downloads\netisu-current-main\tbs\01";
+		private string EditorPlaytestBinary = @"C:\Users\ROBLO\OneDrive\Desktop\Netisu\builds\current";
 
 		public static Engine3D Instance { get; private set; } = null!;
 

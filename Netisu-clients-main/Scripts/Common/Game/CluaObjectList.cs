@@ -112,11 +112,8 @@ namespace Netisu.Game
 				case "Environment":
 					Datamodels.Environment _environment = instance as Datamodels.Environment;
 					_d["Brightness"] = _environment.Brightness;
-					_d["VolumetricFogEnabled"] = _environment.VolumetricFogEnabled;
-					_d["SSREnabled"] = _environment.SSREnabled;
-					_d["SSAOEnabled"] = _environment.SSAOEnabled;
 					_d["DayTime"] = _environment.DayTime;
-					_d["ManualTimeControl"] = _environment.ManualTimeControl;
+					// _d["ManualTimeControl"] = _environment.ManualTimeControl;
 					return _d;
 			}
 
