@@ -20,46 +20,70 @@ namespace Netisu.Client
 		public Datamodels.Game GameDatamodel = null!;
 
 		public static Server Instance { get; private set; } = null!;
-		
 		private NetworkManager _network;
 		public Dictionary<long, PlayerSession> SessionPlayers = [];
+		public static bool PlaytestMode { get; private set; } = false;
 		public string MapJson = string.Empty;
 
 		public override void _Ready()
 		{
 			Instance = this;
+			PlaytestMode = Initializer.ProgramArguments.ContainsKey("playtest");
 			_network = GetNode<NetworkManager>("/root/NetworkManager");
 
 			// Get a reference to the Players node inside the instanced GameWorld scene.
 			PlayersContainer = GetNode<Players>("Game/Players");
 
 			// Connect to signals from the NetworkManager to drive server logic
+			_network.Server_EventFired += OnServerEventFired;
 			_network.Server_PlayerAuthenticated += OnPlayerAuthenticated;
 			_network.Server_PlayerChatMessageReceived += OnChatMessageReceived;
 			Multiplayer.PeerDisconnected += OnPlayerLeft;
 
 			// Load map data
-			using var file = FileAccess.Open("user://Maps/playtest-map.ntsm", FileAccess.ModeFlags.Read);
-			if (file != null) MapJson = file.GetAsText();
-			
+			if (Initializer.ProgramArguments.TryGetValue("map-path", out string path) && path == "default")
+			{
+				using var fileAccess = FileAccess.Open("user://Maps/playtest-map.ntsm", FileAccess.ModeFlags.Read);
+				if (fileAccess != null)
+				{
+					MapJson = fileAccess.GetAsText();
+					GD.Print("Server has loaded map data into memory.");
+				}
+				else
+				{
+					GD.PrintErr("No playtest-map.ntsm found?");
+					GetTree().Quit();
+				}
+			}
+
 			StartServer();
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
 			// Get the Environment node from the instanced GameWorld scene
-			var environmentNode = GetNode<Netisu.Datamodels.Environment>("Game/Environment");
+			var environmentNode = GetNode<Datamodels.Environment>("Game/Environment");
 			if (environmentNode != null)
 			{
 				// Broadcast the current time of day to all clients
-				Rpc(nameof(Client.UpdateEnvironment), environmentNode.DayTime);
+				_network.Rpc(nameof(NetworkManager.UpdateEnvironment), environmentNode.DayTime);
 			}
+		}
+		private void OnServerEventFired(long peerId, string eventName, Godot.Collections.Array args)
+		{
+			GD.Print($"Server received event '{eventName}' from peer {peerId}.");
+			// Add your logic here to handle the event from the client's Lua script.
 		}
 
 		public void StartServer()
 		{
+			if (!int.TryParse(Initializer.ProgramArguments["port"], out int Port))
+			{
+				Port = PlaytestMode ? 2034 : 25565;
+			}
+
 			var peer = new ENetMultiplayerPeer();
-			if (peer.CreateServer(25565) != Error.Ok)
+			if (peer.CreateServer(Port) != Error.Ok)
 			{
 				GD.PrintErr("Failed to start server.");
 				GetTree().Quit();
@@ -69,30 +93,30 @@ namespace Netisu.Client
 			GD.Print("Server is up!");
 		}
 
-		private void OnPlayerAuthenticated(long peerId, string authKey, Godot.Collections.Dictionary<string, string> playerInfo)
+		private void OnPlayerAuthenticated(long peerId, string authKey, Godot.Collections.Dictionary playerInfo)
 		{
-			GD.Print($"Peer {peerId} authenticated as {playerInfo["Name"]}");
-			
+			string playerName = playerInfo.ContainsKey("Name") ? playerInfo["Name"].ToString() : $"Player_{peerId}";
+			GD.Print($"Peer {peerId} authenticated as '{playerName}'.");
+
 			var playerNode = GD.Load<PackedScene>("res://Prefabs/Player/Player_Server.tscn").Instantiate<Player>();
 			playerNode.Name = peerId.ToString();
 			PlayersContainer.AddChild(playerNode);
-			
-			SessionPlayers.Add(peerId, new PlayerSession(authKey, playerInfo, playerNode));
 
-			// Acknowledge authentication
-			_network.RpcId(peerId, nameof(NetworkManager.AuthenticationNoted), "Welcome!");
-			
-			// Tell the new player about all existing players
-			foreach(var session in SessionPlayers)
+			var typedPlayerInfo = new Godot.Collections.Dictionary<string, string>();
+			foreach (var key in playerInfo.Keys)
 			{
-				if (session.Key == peerId) continue;
-				_network.RpcId(peerId, nameof(NetworkManager.AddPlayer), (int)session.Key, session.Value.PlayerData);
+				typedPlayerInfo[key.ToString()] = playerInfo[key].ToString();
 			}
+			SessionPlayers.Add(peerId, new PlayerSession(authKey, typedPlayerInfo, playerNode));
 
-			// Tell everyone else about the new player
+			_network.RpcId(peerId, nameof(NetworkManager.AuthenticationNoted), "Welcome!");
+
+			var allPlayers = new Godot.Collections.Dictionary<long, Godot.Collections.Dictionary<string, string>>();
+			foreach (var p in SessionPlayers) allPlayers[p.Key] = p.Value.PlayerData;
+			_network.RpcId(peerId, nameof(NetworkManager.PopulatePlayerList), allPlayers);
+
 			_network.Rpc(nameof(NetworkManager.AddPlayer), (int)peerId, playerInfo);
-			
-			// Send the map
+
 			_network.RpcId(peerId, nameof(NetworkManager.LoadInitialMap), MapJson);
 		}
 
@@ -100,7 +124,7 @@ namespace Netisu.Client
 		{
 			if (SessionPlayers.TryGetValue(peerId, out var session))
 			{
-				_network.Rpc(nameof(NetworkManager.ChatMessageClientRecieved), session.PlayerData["Name"], message);
+				_network.Rpc(nameof(NetworkManager.ChatMessageClientRecieved), session.PlayerData["Username"], message);
 			}
 		}
 

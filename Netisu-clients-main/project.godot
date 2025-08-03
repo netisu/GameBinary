@@ -37,7 +37,6 @@ formats/gzip/compression_level=2
 
 [display]
 
-window/size/mode=2
 window/size/initial_position_type=0
 window/size/extend_to_title=true
 window/stretch/mode="canvas_items"

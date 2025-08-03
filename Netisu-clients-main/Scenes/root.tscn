@@ -195,8 +195,8 @@ bg_color = Color(0.109804, 0.109804, 0.109804, 1)
 
 [node name="Root" type="Node3D" node_paths=PackedStringArray("environment", "game", "Stop", "Play", "intp")]
 script = ExtResource("1_vxp2n")
-environment = NodePath("Game/Environment")
-game = NodePath("Game")
+environment = NodePath("EngineGUI/SubViewportContainer/SubViewport/Game/Environment")
+game = NodePath("EngineGUI/SubViewportContainer/SubViewport/Game")
 Stop = NodePath("EngineGUI/Ribbon/Panel/HBoxContainer2/VBoxContainer/HBoxContainer/Play/Stop")
 Play = NodePath("EngineGUI/Ribbon/Panel/HBoxContainer2/VBoxContainer/HBoxContainer/Play/Play")
 intp = NodePath("Mixins/Interpreter")
@@ -413,9 +413,6 @@ script = ExtResource("18_6oxi5")
 [node name="Interpreter" type="Node" parent="Mixins"]
 script = ExtResource("19_d7xmk")
 
-[node name="Game" parent="." instance=ExtResource("21_6xs3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0118318, 0.00395012, -0.000279784)
-
 [node name="EngineGUI" type="Control" parent="." node_paths=PackedStringArray("GameDataModel", "CodeEditor", "TabsContainer", "PropertiesContainer", "userInterface")]
 layout_mode = 3
 anchors_preset = 15
@@ -424,7 +421,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("22_hwq6u")
-GameDataModel = NodePath("../Game")
+GameDataModel = NodePath("SubViewportContainer/SubViewport/Game")
 CodeEditor = NodePath("CodeEditor/CodeEdit")
 TabsContainer = NodePath("Divider/Tabs/HBoxContainer2")
 PropertiesContainer = NodePath("Sidebar/VSplitContainer/Properties/ScrollContainer/VBoxContainer")
@@ -1642,6 +1639,9 @@ light_energy = 0.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EngineGUI/SubViewportContainer/SubViewport/EngineCamera/SkyController"]
 environment = ExtResource("20_gml4o")
 
+[node name="Game" parent="EngineGUI/SubViewportContainer/SubViewport" instance=ExtResource("21_6xs3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0118318, 0.00395012, -0.000279784)
+
 [node name="UserInterface" type="RigidBody3D" parent="EngineGUI/SubViewportContainer/SubViewport" groups=["RESTRICTED_MAX", "SubViewportContainer"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0118318, 0.00395012, -0.000279784)
 freeze = true
@@ -1670,4 +1670,4 @@ script = ExtResource("49_h3chn")
 [connection signal="pressed" from="EngineGUI/Topbar/Container/HBoxContainer2/Exit" to="EngineGUI" method="Quit"]
 
 [editable path="Windows/Gizmos"]
-[editable path="Game"]
+[editable path="EngineGUI/SubViewportContainer/SubViewport/Game"]

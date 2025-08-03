@@ -21,7 +21,7 @@ namespace Netisu
 			script.Globals["wait"] = (Action<int>)PreservedGlobalFunctions.Wait;
 			script.Globals["printl"] = (Action<string>)PreservedGlobalFunctions.Printl;
 			script.Globals["Map"] = GetNode<Map>("/root/Root/Game/Map");
-			script.Globals["Game"] = GetNode<Datamodels.Game>("/root/Root/Game");
+			script.Globals["Game"] = GetNode<Datamodels.Game>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/Game");
 			script.Globals["Application"] = new PreservedGlobalClasses.Application(this);
 			script.Globals["Vector3"] = new PreservedGlobalClasses.Vec3();
 			script.Globals["Vector2"] = new PreservedGlobalClasses.Vec2();

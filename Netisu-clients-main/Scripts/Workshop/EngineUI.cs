@@ -148,7 +148,7 @@ namespace Netisu.Workshop
 				SwitchToTab("Game");
 				return;
 			}
-			LoadIntoCurrentScript((BaseScript)GetNode("/root/Root/Game").FindChild(scriptName, true, false));
+			LoadIntoCurrentScript((BaseScript)GetNode("/root/Root/EngineGUI/SubViewportContainer/SubViewport/Game").FindChild(scriptName, true, false));
 		}
 
 		public void SwitchToTab(string name)
@@ -189,7 +189,7 @@ namespace Netisu.Workshop
 			Node instanced = packedScene.Instantiate();
 			instanced.Name = type;
 
-			var gameNode = GetNode<Node>("/root/Root/Game");
+			var gameNode = GetNode<Node>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/Game");
 			Gizmo3DPlugin.Gizmo3D.Instance.ClearSelection();
 
 			//  Determine the correct parent and add the new node to the scene tree

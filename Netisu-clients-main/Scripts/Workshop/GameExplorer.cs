@@ -27,7 +27,7 @@ namespace Netisu.Workshop
 		public override void _Ready()
 		{
 			Instance = this;
-			CallDeferred("CreateTreeItems", GetNode<Instance>("/root/Root/Game"), default);
+			CallDeferred("CreateTreeItems", GetNode<Instance>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/Game"), default);
 		}
 
 		public void AttemptEdit() => EditSelected(true);

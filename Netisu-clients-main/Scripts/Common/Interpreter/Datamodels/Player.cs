@@ -129,28 +129,16 @@ namespace Netisu.Datamodels
 			// try to access any visual nodes.
 			if (Multiplayer.IsServer())
 			{
-				// The server version of the player has no visual components.
-				// We can add any server-specific initialization here if needed.
+				// If we are on the server, we do nothing in _Ready() because the
+				// server's player object has no visuals to set up.
 				GD.Print($"Server-side player node {Name} is ready.");
 				return;
 			}
-			
-			// The following code will ONLY run on the client, which is safe.
-			SetMultiplayerAuthority((int)RpcIdByServer);
 
-			PrivateModel ??= GetNode<Node3D>("Avatar");
-			PrivateSpringArm = GetNode<SpringArm3D>("SpringArm3D");
-			PrivateAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-			PrivateLabel3D = GetNode<Label3D>("Avatar/Username");
-
-			GD.Print($"[SpringArm Check] LocalID: {Multiplayer.GetUniqueId()} | RpcIdByServer: {RpcIdByServer}");
-
-			if (!IsMultiplayerAuthority())
-			{
-				// This is a remote player on our client. We don't need their camera.
-				PrivateSpringArm.QueueFree();
-				return;
-			}
+				PrivateModel ??= GetNode<Node3D>("Avatar");
+				PrivateSpringArm = GetNode<SpringArm3D>("SpringArm3D");
+				PrivateAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+				PrivateLabel3D = GetNode<Label3D>("Avatar/Username");			
 		}
 
 		[MoonSharp.Interpreter.MoonSharpHidden]
@@ -180,6 +168,21 @@ namespace Netisu.Datamodels
 			}
 		}
 
+		public void Initialize(long rpcId, bool isLocalPlayer)
+		{
+			RpcIdByServer = rpcId;
+			SetMultiplayerAuthority((int)rpcId);
+
+			if (!isLocalPlayer)
+			{
+				// This is a remote player. It's now 100% safe to remove their camera.
+				PrivateSpringArm?.QueueFree();
+			}
+			else
+			{
+				GD.Print("Local player initialized, camera is active.");
+			}
+		}
 		public void Sit(Seat seat = null!)
 		{
 			if (seat == null)

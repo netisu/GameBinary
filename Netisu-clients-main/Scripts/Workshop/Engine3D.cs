@@ -20,7 +20,7 @@ namespace Netisu.Workshop
 		[Export] public Sprite2D Stop;
 		[Export] public Sprite2D Play;
 		[Export] private Interpreter intp;
-		
+
 		private string EditorPlaytestBinary = @"C:\Users\ROBLO\OneDrive\Desktop\Netisu\builds\current";
 
 		public static Engine3D Instance { get; private set; } = null!;
@@ -28,7 +28,7 @@ namespace Netisu.Workshop
 		public bool PlayTest = false;
 
 		private readonly List<int> RunningInstances = [];
-		
+
 		private Node embeddedClientInstance = null;
 
 		public override void _Ready()
@@ -100,18 +100,46 @@ namespace Netisu.Workshop
 				embeddedClientInstance.QueueFree();
 				embeddedClientInstance = null;
 			}
-			
-			
-			// Re-enable the editor camera and make it the current one.
-			EngineCamera.Instance.Disabled = false;
-			EngineCamera.Instance.Current = true;
-			
+            if(EngineCamera.Instance != null)
+            {
+                EngineCamera.Instance.Disabled = false;
+                EngineCamera.Instance.Current = true;
+            }
+
+			 if(EngineCamera.Instance != null)
+            {
+                EngineCamera.Instance.ProcessMode = ProcessModeEnum.Inherit;
+                EngineCamera.Instance.Current = true;
+            }
 			// Restore visibility of the workshop's 3D editing tools, using the correct paths.
 			GetNodeOrNull<Node3D>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/UserInte")?.Show();
 			GetNodeOrNull<Node3D>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/GizmoNew")?.Show();
 			GetNodeOrNull<Node3D>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/SkyController")?.Show();
 
 			GD.Print("Embedded client stopped and playtest shut down.");
+		}
+		/// <summary>
+		///Removes the cameras
+		/// </summary>
+		public void SwitchToPlayerCamera(Camera3D playerCamera)
+		{
+			GetNode<SubViewportContainer>("/root/Root/EngineGUI/SubViewportContainer").Visible = true;
+    		var subViewport = GetNode<SubViewport>("/root/Root/EngineGUI/SubViewportContainer/SubViewport");
+
+    		if (subViewport != null && playerCamera != null)
+			{
+				// Disable the old editor camera.
+				EngineCamera.Instance.ProcessMode = ProcessModeEnum.Disabled;
+				EngineCamera.Instance.Current = false;
+
+				playerCamera.MakeCurrent();
+				
+				GD.Print("Engine3D: Switched to player camera.");
+			}
+			else
+			{
+				GD.PrintErr("Engine3D: Could not find EngineCamera or PlayerCamera to switch.");
+			}
 		}
 
 		/// <summary>
@@ -146,10 +174,6 @@ namespace Netisu.Workshop
 			}
 
 			subViewport.AddChild(embeddedClientInstance);
-			
-			// Disable the editor camera and make it non-current so the player's camera can take over.
-			EngineCamera.Instance.Disabled = true;
-			EngineCamera.Instance.Current = false;
 
 			// Hide the 3D workshop tools.
 			GetNodeOrNull<Node3D>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/UserInte")?.Hide();
@@ -202,7 +226,7 @@ namespace Netisu.Workshop
 			}
 			RunningInstances.Clear();
 		}
-		
+
 		public override void _Notification(int what)
 		{
 			if (what == NotificationWMCloseRequest)
@@ -215,7 +239,7 @@ namespace Netisu.Workshop
 		{
 			ClientInstanceUpdate();
 		}
-		
+
 		public void ClientInstanceUpdate()
 		{
 			if (!PlayTest)
@@ -230,7 +254,7 @@ namespace Netisu.Workshop
 					break;
 				}
 			}
-			
+
 			if (!anyRunning)
 			{
 				ShutPlaytest();

@@ -48,7 +48,7 @@ namespace Netisu.Workshop
 
 		public static void DuplicateSelection()
 		{
-			Netisu.Game.Map.Importer _Importer = new();
+			Game.Map.Importer _Importer = new();
 			if (Gizmo3DPlugin.Gizmo3D.Instance.Selection != null)
 			{
 				Godot.Collections.Dictionary serializedData = CluaObjectList.GetObjectInformation(Gizmo3DPlugin.Gizmo3D.Instance.Selection.Value.Instance);
@@ -78,7 +78,7 @@ namespace Netisu.Workshop
 
 		public override void _UnhandledInput(InputEvent _event)
 		{
-			if (Engine3D.Instance.PlayTest) { return; }
+			if (_disabled || Engine3D.Instance.PlayTest) { return; }
 
 			if (Input.IsActionJustPressed("Delete"))
 			{
@@ -189,11 +189,7 @@ namespace Netisu.Workshop
 
 		public override void _PhysicsProcess(double delta)
 		{
-			if (_disabled)
-			{
-				return;
-			}
-			if (Engine3D.Instance.PlayTest) { return; }
+			if (_disabled || Engine3D.Instance.PlayTest) { return; }
 
 			UpdateMovement((float)delta);
 		}
