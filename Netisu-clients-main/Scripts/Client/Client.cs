@@ -2,6 +2,7 @@ using Godot;
 using Netisu.Datamodels;
 using Netisu.Workshop;
 using Netisu.Client.UI;
+using System.Collections.Generic;
 
 namespace Netisu.Client
 {
@@ -13,6 +14,9 @@ namespace Netisu.Client
 		public Player LocalPlayer { get; private set; }
 		public const string IP_ADD = "127.0.0.1";
 		private NetworkManager _network;
+		private GridContainer _leaderboardGrid;
+		private List<string> _currentGameStats;
+
 		private Godot.Collections.Dictionary<string, string> _playerInfo = new()
 		{
 			{ "Name", "Player" + GD.Randi() % 1000 }
@@ -24,11 +28,13 @@ namespace Netisu.Client
 			_network = GetNode<NetworkManager>("/root/NetworkManager");
 			GameModel = GetParent().GetNode<Datamodels.Game>("Game");
 			PlayersContainer = GetParent().GetNode<Players>("Game/Players");
+			_leaderboardGrid = GetParent().GetNode<GridContainer>("Root/UserInterface/Leaderboard/GridContainer/Panel/GridContainer");
 
 			_network.Client_AuthenticationNoted += OnAuthenticationNoted;
 			_network.Client_PlayerListReceived += OnPlayerListReceived;
 			_network.Client_MapLoadRequested += OnMapLoadRequested;
 			_network.Client_PlayerAdded += OnPlayerAdded;
+			_network.Client_LeaderboardInitialized += OnLeaderboardInitialized;
 			_network.Client_PlayerLeft += OnPlayerLeft;
 			_network.Client_ChatMessageReceived += OnChatMessageReceived;
 
@@ -98,22 +104,50 @@ namespace Netisu.Client
 		{
 			if (EngineCamera.Instance != null)
 			{
-				EngineCamera.Instance.Disabled = true;
+				EngineCamera.Instance.ProcessMode = ProcessModeEnum.Disabled;
 				EngineCamera.Instance.Current = false;
 			}
 		}
 
-		private void OnPlayerLeft(int peerId, string playerName)
+		private void OnLeaderboardInitialized(Godot.Collections.Array<string> statNames)
 		{
-			var playerNode = PlayersContainer.GetNodeOrNull(peerId.ToString());
-			playerNode?.QueueFree();
+			// Store the stat names received from the server
+			_currentGameStats = new List<string>(statNames);
+
+			foreach (Node child in _leaderboardGrid.GetChildren())
+			{
+				child.QueueFree();
+			}
+
+			_leaderboardGrid.Columns = 1 + statNames.Count;
+
+			var nameHeader = new Label { Text = "Player", ClipText = true };
+			_leaderboardGrid.AddChild(nameHeader);
+
+			foreach (string statName in statNames)
+			{
+				var statHeader = new Label { Text = statName, HorizontalAlignment = HorizontalAlignment.Center };
+				_leaderboardGrid.AddChild(statHeader);
+			}
 		}
 
-		private void OnChatMessageReceived(string username, string message)
+		private void AddPlayerToLeaderboard(string playerName, Godot.Collections.Dictionary<string, int> playerStats)
+		{
+			var nameLabel = new Label { Text = playerName };
+			_leaderboardGrid.AddChild(nameLabel);
+
+			foreach (string statName in _currentGameStats)
+			{
+				var statLabel = new Label { Text = playerStats[statName].ToString(), HorizontalAlignment = HorizontalAlignment.Center };
+				_leaderboardGrid.AddChild(statLabel);
+			}
+		}
+
+		private void OnChatMessageReceived(string username, string content)
 		{
 			if (ChatManager.Instance != null)
 			{
-				ChatManager.Instance.MessageRecieved(username, message);
+				ChatManager.Instance.MessageRecieved(username, content);
 			}
 		}
 		private void OnPlayerLeft(int rpcId)

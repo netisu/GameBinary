@@ -24,6 +24,7 @@ namespace Netisu.Client
 		public Dictionary<long, PlayerSession> SessionPlayers = [];
 		public static bool PlaytestMode { get; private set; } = false;
 		public string MapJson = string.Empty;
+		private List<string> _currentGameStats = new List<string>();
 
 		public override void _Ready()
 		{
@@ -33,6 +34,10 @@ namespace Netisu.Client
 
 			// Get a reference to the Players node inside the instanced GameWorld scene.
 			PlayersContainer = GetNode<Players>("Game/Players");
+
+			// When you load a map or game mode, define its stats.
+			// This will be loaded from the map file itself in the future.
+			_currentGameStats = new List<string> { "KOs", "Cubes" };
 
 			// Connect to signals from the NetworkManager to drive server logic
 			_network.Server_EventFired += OnServerEventFired;
@@ -101,6 +106,9 @@ namespace Netisu.Client
 			var playerNode = GD.Load<PackedScene>("res://Prefabs/Player/Player_Server.tscn").Instantiate<Player>();
 			playerNode.Name = peerId.ToString();
 			PlayersContainer.AddChild(playerNode);
+			
+			var statsArray = new Godot.Collections.Array<string>(_currentGameStats);
+			_network.RpcId(peerId, nameof(NetworkManager.InitializeLeaderboard), statsArray);
 
 			var typedPlayerInfo = new Godot.Collections.Dictionary<string, string>();
 			foreach (var key in playerInfo.Keys)

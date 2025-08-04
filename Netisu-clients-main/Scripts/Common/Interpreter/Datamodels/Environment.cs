@@ -5,8 +5,12 @@ namespace Netisu.Datamodels
 	public partial class Environment : Instance
 	{
 		// These will be assigned in _Ready() instead of the editor.
+		[Export]
 		private WorldEnvironment _worldEnv;
+		[Export]
 		private DirectionalLight3D _sun;
+		[Export]
+		private DirectionalLight3D _moon = null!;
 
 		// This is the "source of truth" for the time of day.
 		// A MultiplayerSynchronizer should be used to sync this from server to clients.
@@ -22,6 +26,12 @@ namespace Netisu.Datamodels
 
 		public override void _Process(double delta)
 		{
+			// Add this check to ensure we only run networking-related code
+			// when a multiplayer session is actually active.
+			if (Multiplayer.MultiplayerPeer == null)
+			{
+				return;
+			}
 			if (!Multiplayer.IsServer())
 			{
 				UpdateVisuals();
@@ -30,16 +40,14 @@ namespace Netisu.Datamodels
 
 		private void UpdateVisuals()
 		{
-			if (_worldEnv == null || _sun == null) return;
+			if (_worldEnv?.Environment?.Sky?.SkyMaterial is not ShaderMaterial skyShader) return;
+			if (!IsInstanceValid(_sun) || !IsInstanceValid(_moon)) return;
 
-			// Simple sun rotation based on time
 			float dayProgress = DayTime / 24.0f;
-			_sun.RotationDegrees = new Vector3(-90 + (dayProgress * 180), -30, 0);
+			_sun.RotationDegrees = new Vector3(-90 + (dayProgress * 180), 0, 0);
 
-			if (_worldEnv.Environment?.Sky?.SkyMaterial is ShaderMaterial skyShader)
-			{
-				skyShader.SetShaderParameter("sun_dir_world", -_sun.GlobalTransform.Basis.Z.Normalized());
-			}
+			Vector3 sunDirWorld = -_sun.GlobalTransform.Basis.Z.Normalized();
+			skyShader.SetShaderParameter("sun_dir_world", sunDirWorld);
 		}
 
 		public float Brightness

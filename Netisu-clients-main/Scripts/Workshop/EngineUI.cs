@@ -288,7 +288,7 @@ namespace Netisu.Workshop
 				CodeEditor.GetParent<Control>().Visible = false;
 				CurrentScriptLoaded = null;
 				ActivityManager.Instance.discordRpcClient.UpdateState($"Editing workspace");
-				EngineCamera.Instance.Disabled = false;
+				EngineCamera.Instance.ProcessMode = ProcessModeEnum.Disabled;
 			}
 		}
 

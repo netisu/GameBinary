@@ -100,17 +100,11 @@ namespace Netisu.Workshop
 				embeddedClientInstance.QueueFree();
 				embeddedClientInstance = null;
 			}
-            if(EngineCamera.Instance != null)
-            {
-                EngineCamera.Instance.Disabled = false;
-                EngineCamera.Instance.Current = true;
-            }
-
-			 if(EngineCamera.Instance != null)
-            {
-                EngineCamera.Instance.ProcessMode = ProcessModeEnum.Inherit;
-                EngineCamera.Instance.Current = true;
-            }
+			if (EngineCamera.Instance != null)
+			{
+				EngineCamera.Instance.ProcessMode = ProcessModeEnum.Inherit;
+				EngineCamera.Instance.Current = true;
+			}
 			// Restore visibility of the workshop's 3D editing tools, using the correct paths.
 			GetNodeOrNull<Node3D>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/UserInte")?.Show();
 			GetNodeOrNull<Node3D>("/root/Root/EngineGUI/SubViewportContainer/SubViewport/GizmoNew")?.Show();
@@ -121,24 +115,13 @@ namespace Netisu.Workshop
 		/// <summary>
 		///Removes the cameras
 		/// </summary>
-		public void SwitchToPlayerCamera(Camera3D playerCamera)
+		public void SwitchToPlayerCamera()
 		{
-			GetNode<SubViewportContainer>("/root/Root/EngineGUI/SubViewportContainer").Visible = true;
-    		var subViewport = GetNode<SubViewport>("/root/Root/EngineGUI/SubViewportContainer/SubViewport");
-
-    		if (subViewport != null && playerCamera != null)
+			if (EngineCamera.Instance != null)
 			{
-				// Disable the old editor camera.
 				EngineCamera.Instance.ProcessMode = ProcessModeEnum.Disabled;
 				EngineCamera.Instance.Current = false;
-
-				playerCamera.MakeCurrent();
-				
 				GD.Print("Engine3D: Switched to player camera.");
-			}
-			else
-			{
-				GD.PrintErr("Engine3D: Could not find EngineCamera or PlayerCamera to switch.");
 			}
 		}
 

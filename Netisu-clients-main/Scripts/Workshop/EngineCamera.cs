@@ -26,7 +26,6 @@ namespace Netisu.Workshop
 		float TotalPitch = 0.0f;
 		float VelocityMultipl = 4.0f;
 
-		bool _disabled = false;
 
 		Vector2 MousePosition = new(0, 0);
 		Vector3 Direction = new(0.0f, 0.0f, 0.0f);
@@ -36,15 +35,6 @@ namespace Netisu.Workshop
 		int Decceleration = -10;
 
 		bool _W, _A, _S, _D, _Q, _E, _SHIFT, _ALT = false;
-
-		public bool Disabled
-		{
-			get => _disabled;
-			set
-			{
-				_disabled = value;
-			}
-		}
 
 		public static void DuplicateSelection()
 		{
@@ -78,7 +68,11 @@ namespace Netisu.Workshop
 
 		public override void _UnhandledInput(InputEvent _event)
 		{
-			if (_disabled || Engine3D.Instance.PlayTest) { return; }
+			if (!IsCurrent())
+			{
+				return;
+			}
+			if (Engine3D.Instance.PlayTest) { return; }
 
 			if (Input.IsActionJustPressed("Delete"))
 			{
@@ -189,7 +183,11 @@ namespace Netisu.Workshop
 
 		public override void _PhysicsProcess(double delta)
 		{
-			if (_disabled || Engine3D.Instance.PlayTest) { return; }
+			if (!IsCurrent())
+			{
+				return;
+			}
+			if (Engine3D.Instance.PlayTest) { return; }
 
 			UpdateMovement((float)delta);
 		}

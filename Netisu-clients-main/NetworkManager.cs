@@ -29,6 +29,9 @@ public partial class NetworkManager : Node
 	[Signal]
 	public delegate void Client_EventFiredEventHandler(string eventName, Godot.Collections.Array args);
 
+	[Signal]
+	public delegate void Client_LeaderboardInitializedEventHandler(Godot.Collections.Array<string> statNames);
+
 
 	// --- RPCs Called BY the Client, Received BY the Server ---
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -95,5 +98,10 @@ public partial class NetworkManager : Node
 	public void PopulatePlayerList(Godot.Collections.Dictionary<long, Godot.Collections.Dictionary<string, string>> allPlayers)
 	{
 		EmitSignal(SignalName.Client_PlayerListReceived, allPlayers);
+	}
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+	public void InitializeLeaderboard(Godot.Collections.Array<string> statNames)
+	{
+		EmitSignal(SignalName.Client_LeaderboardInitialized, statNames);
 	}
 }
